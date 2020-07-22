@@ -122,6 +122,13 @@ Validator.localize("es", es);
           this.label? this._label = this.label : this._label = this.default.label
           this.type? this._type = this.type : this._type = this.default.type
           this.styles? this._styles = this.styles : this._styles = this.default.styles
+        //   if(this.styles != undefined || this.styles != null || this.styles != '' ){
+        //       this.styles.formGroup? this._styles.formGroup = this.styles.formGroup : this._styles.formGroup = this.default.styles.formGroup
+        //       this.styles.label? this._styles.label = this.styles.label : this._styles.label = this.default.styles.label
+        //       this.styles.container? this._styles.container = this.styles.comtainer : this._styles.container = this.default.styles.comtainer
+        //   }else{
+        //       this._styles = this.default.styles
+        //   }
           this.vModel? this._vModel = this.vModel : this._vModel = this.default.vModel
           this.textArea? this._textArea = this.textArea : this._textArea = this.default.textArea
           this.isVisible? this._isVisible = this.isVisible : this._isVisible = this.default.isVisible

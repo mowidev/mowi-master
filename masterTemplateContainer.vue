@@ -1,26 +1,17 @@
 <template>
   <div>
+    <LoadingComponent v-if="isLoading"></LoadingComponent>
     <div class="card">
       <div class="card-header">
-        <h2>Búsqueda</h2>
-        <!-- <div class="card-header-actions" align-items: center>
-              <label class="control-label col-md-12 col-sm-12 col-xs-12">Campos seleccionados</label>
-                <treeselect   
-                v-model="valueTest"
-                v-on:input="returnData" 
-                :value-consists-of="valueConsistsOf"
-                :multiple="true"
-                :options="arrayOptions" />
-               
-        </div> -->
+        <h2>{{headingTitleFinal}}</h2>
         <div class="clearfix"></div>
       </div>
       
       <div class="card-body">
-        <masterAdministrator
+        <MasterAdministrator
           :filters="filters"          
           :buttonFilter="buttonFilter"
-        ></masterAdministrator>
+        ></MasterAdministrator>
         <div class="card-header-actions">
           <button type="button"  @click="runSearch()" class="btn btn-success btn-xs">Buscar</button> 
         </div>
@@ -31,17 +22,19 @@
 </template>
 <script>
 
-
-import masterAdministrator from "./masterAdministratorContainer.vue";
-import TableMaf from "./tableMaf.vue";
+//import consultServices from './../../utilities/consultServices.js';
+import LoadingComponent from "./loadingComponentContainer.vue";
+import MasterAdministrator from "./masterAdministratorContainer.vue";
+import TableMaf from "../tableMaf.vue";
 import Treeselect from '@riophae/vue-treeselect';
 
 export default {
   name: "masterTemplate",
   components: {
-    masterAdministrator,
+    MasterAdministrator,
     TableMaf,
     Treeselect,
+    LoadingComponent,
   },
 
   props:{
@@ -53,19 +46,23 @@ export default {
     setDataTable:Function,
     dataLoadFunction:Function,
     useMassiveSelector:Boolean,
+    headingTitle:String
   },
 
   data: () => ({
       //declarar variable que se va utilizar
-      valueConsistsOf: 'ALL_WITH_INDETERMINATE',  
+      valueConsistsOf: 'ALL_WITH_INDETERMINATE',
+      isLoading: false,  
       arrayOptions:[],
-      valueTest:null
+      valueTest:null,
+      headingTitleFinal:'',
   }),
 
 
 
   created () {
-    this.arrayOptions = this.tranforForSelectTree(this.filters)
+    this.arrayOptions = this.tranforForSelectTree(this.filters) 
+    this.headingTitle? this.headingTitleFinal = this.headingTitle : this.headingTitleFinal = 'Búsqueda'
   },
   methods: {
 
@@ -100,6 +97,7 @@ export default {
     },
 
     async runSearch(){
+        this.isLoading = true;      
         //esta función permite la búsqueda en función a los parámetros seleccionados  
         //definir variables
         var arrayData=[]
@@ -134,7 +132,7 @@ export default {
         else{
           alert('Debe completar los campos obligatorios(*) para inciar la búsqueda')
         }
-
+        this.isLoading = false;
     },
   }
 };
