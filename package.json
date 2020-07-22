@@ -1,0 +1,30 @@
+{
+  "name": "mowi-master",
+  "version": "1.0.0",
+  "description": "component developed for search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mowidev/mowi-master.git"
+  },
+  "keywords": [
+    "mowi"
+  ],
+  "author": "Mowidev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mowidev/mowi-master/issues"
+  },
+  "homepage": "https://github.com/mowidev/mowi-master#readme",
+  "dependencies": {
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@riophae/vue-treeselect": "^0.4.0",
+    "@vue/babel-preset-jsx": "^1.1.2",
+    "lodash": "^4.17.19",
+    "vuejs-datepicker": "^1.6.2"
+  }
+}
