@@ -2,8 +2,8 @@
   <div>
     <div class="card">
       <div class="card-header">
-        <h2>Busqueda</h2>
-        <div class="card-header-actions" align-items: center>
+        <h2>Búsqueda</h2>
+        <!-- <div class="card-header-actions" align-items: center>
               <label class="control-label col-md-12 col-sm-12 col-xs-12">Campos seleccionados</label>
                 <treeselect   
                 v-model="valueTest"
@@ -12,7 +12,7 @@
                 :multiple="true"
                 :options="arrayOptions" />
                
-        </div>
+        </div> -->
         <div class="clearfix"></div>
       </div>
       
