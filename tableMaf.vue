@@ -1,7 +1,7 @@
 <template>
     <!--<div class="row">Content-->
         <div class="card">
-            <div class="card-header" v-if="titleView != false">
+            <div class="card-header" style="padding-left: 15px;" v-if="titleView != false">
                 <h2>{{tableTitle}}</h2>
                 <div class="clearfix"></div>
             </div>
@@ -12,11 +12,12 @@
                     <div class="row" v-if="datePerPageView != false">
                         <div class="col-md-12">
                             <div class="form-group form-inline pull-left VueTables__search">
-                                <label> Datos:
+                                <label style="padding-left: 7px;"> Datos : </label>
+                                <div style="padding-left: 15px;">
                                     <select class="form-control" v-model="datePerPage">
                                         <option v-for="value in valPage" :value="value"  >{{value}}</option>
-                                    </select>
-                                    </label>
+                                    </select>     
+                                </div>                                  
                             </div>
                         </div>
                         <div v-if="textView == true" class="col-md-12">
@@ -94,7 +95,7 @@
 </template>
 
 <script>
-    
+    import LoadingComponent from "./../components/loadingComponent.vue";
     import _ from 'lodash';
      const Value = ({ props }) => {
       return <div>{props.data}</div>
