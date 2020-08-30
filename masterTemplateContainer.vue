@@ -190,6 +190,10 @@ export default {
         }
         this.isLoading = false;
     },
+
+    async setInitialData(data){
+       this.$refs.tableMaf.formatData(this.setDataTable(data));
+    },
   }
 };
 </script>
