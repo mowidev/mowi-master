@@ -22,7 +22,7 @@
     </div>
     <!-- </div> -->
 
-    <div class="card-header-actions">
+    <div v-if="flagUploadDta == true" class="card-header-actions">
       <button type="button"  data-toggle="modal" data-target=".bs-example-modal-test"   class="btn btn-success btn-xs">Subir data</button> 
     </div>    
     <TableMaf :header="header" :data="data" :tableTitle="tableTitle" ref="tableMaf" :useMassiveSelector="useMassiveSelector" ></TableMaf>
@@ -78,6 +78,7 @@ export default {
     setDataTable:Function,
     dataLoadFunction:Function,
     useMassiveSelector:Boolean,
+    flagUploadDta:Boolean,
     headingTitle:String
   },
 
@@ -198,4 +199,10 @@ export default {
 };
 </script>
 <style scoped>
+.collapsing {
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+  transition: height 0.2s ease;
+}
+
 </style>
