@@ -1,7 +1,7 @@
 {
   "name": "mowi-master",
-  "version": "1.0.3",
-  "description": "component developed for search",
+  "version": "1.0.5",
+  "description": "component developed for CRUD optimization",
   "main": "index.js",
   "scripts": {
     "start": "nodemon  --exec babel-node src/server.js --watch src/server.js",
