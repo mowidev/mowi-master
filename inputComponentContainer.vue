@@ -55,7 +55,7 @@ Validator.localize("es", es);
 
     export default {
         name: "inputComponent",
-        props: ['type','valueInput','etiqueta','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired'],
+        props: ['type','valueInput','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired'],
         
         components: {
           Value,
@@ -68,7 +68,6 @@ Validator.localize("es", es);
           default:{            
             type:"",
             valueInput: "default",
-            etiqueta:true,
             label: "",
             validation:{},            
             nameInput:"",
@@ -92,7 +91,6 @@ Validator.localize("es", es);
            
             _type:"",
             _valueInput: "",
-            _etiqueta:false,
             _label: "",
             _validation:{},
             _nameInput:"",
@@ -139,11 +137,21 @@ Validator.localize("es", es);
           this.validation? this._validation = this.validation : this._validation = this.default.validation
           //operadores
           if(this._type == 'numeric'){
-            this._operators=[{label:'Igual a',value:'='},
-              {label:'Mayor que', value:'>'},{label:'Menor que', value:'<'}, {label:'Mayor igual', value:'>='}, {label:'Menor igual',value:'<=' }]
+            this._operators = [
+                {label:'Igual a',value:'='},
+                {label:'Mayor que', value:'>'},
+                {label:'Menor que', value:'<'}, 
+                {label:'Mayor igual', value:'>='}, 
+                {label:'Menor igual',value:'<=' }]
+            this.opSelected = '='
           }else{
-            this._operators=[{label:'Continene',value:'include'},
-              {label:'Es igual a', value:'equals'},{label:'Empieza con', value:'%like'}, {label:'Termina con', value:'like%'}, {label:'Vacío',value:'null' }]
+            this._operators=[
+                {label:'Contiene',value:'include'},
+                {label:'Es igual a', value:'equals'},
+                {label:'Empieza con', value:'%like'}, 
+                {label:'Termina con', value:'like%'}, 
+                {label:'Vacío',value:'null' }]
+            this.opSelected = 'include'
           }
 
           //this.$validator.localize('es', this.dict);
