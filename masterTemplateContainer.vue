@@ -18,7 +18,7 @@
                           ></MasterAdministrator>
                        </div>
                        <div class="panel-footer">
-                         <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
+                         <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar test</button> 
                        </div>
                     </div>
                 </div>
@@ -26,12 +26,12 @@
     </div>
 
     <div v-if="flagUploadData == true" class="card-header-actions">
-      <button type="button"  data-toggle="modal" data-target=".bs-example-modal-test"   class="btn btn-success btn-xs show-modal">Subir data</button> 
+      <button type="button"  data-toggle="modal" data-target=".bs-example-modal-import"   class="btn btn-success btn-xs show-modal">Subir data</button> 
     </div>    
     <TableMaf :header="header" :data="data" :tableTitle="tableTitle" ref="tableMaf" :useMassiveSelector="useMassiveSelector" ></TableMaf>
   
     <!-- Modal subida de archivos .CSV -->
-    <div id="myModal" class="modal fade bs-example-modal-test" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="myModal" class="modal fade bs-example-modal-import" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
         <div class="modal-content">            
             <div class="modal-header">
@@ -52,7 +52,7 @@
                     <div class="card-body">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Elegir un archivo CSV desde tu ordenador:</label> 
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         <input type="file" id="csv_file"  name="csv_file" @change="loadCSV($event)" accept=".csv*">
+                         <input type="file" id="csv_file"  name="csv_file" @change="loadCSV($event)" accept=".csv">
                       </div>
                     </div>
                    <!-- <div class="card-body">
@@ -190,7 +190,7 @@
             </div>
             <div class="modal-footer">    
               <div v-if="nowStep == 1">
-                  <button type="button" data-dismiss="modal" class="btn btn-light" @click="cancelProccess">Cancelar</button>  
+                  <button type="button"  class="btn btn-light" @click="cancelProccess">Cancelar</button>  
               </div>
               <div v-if="nowStep == 1">
                  <button type="button" class="btn btn-success btn-xs float-right" @click="showColumnMapping" >Continuar</button> 
@@ -547,7 +547,7 @@ export default {
           this.dataCSV = []
           $("#csv_file").val('')
           this.fileName = ''
-          $('.bs-example-modal-test').modal('hide');
+          $('.bs-example-modal-import').modal('hide');
           this.showDetailStep4 = false
         }
       }
@@ -558,12 +558,18 @@ export default {
      */
     cancelProccess(){
       var flag= confirm('¿Cancelar proceso de importación?')
+      console.log("flaaaaaaaa", flag)
       if(flag == true){
           this.nowStep = 1
           this.dataForMapping = []
           this.dataCSV = []
           $("#csv_file").val('')
           this.fileName = ''
+          $('#myModal').modal('hide');
+      }else{
+        
+        $('#myModal').modal('show');
+
       }
     },
 
