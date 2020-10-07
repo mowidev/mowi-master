@@ -2,12 +2,12 @@
   <div>
     <LoadingComponent v-if="isLoading"></LoadingComponent>
 
-    <div class="card" id="accordion" style="padding-bottom: 0px;">
+    <div  v-if="showSearchSection == true" class="card" id="accordion" style="padding-bottom: 0px;">
         <div class="panel panel-default" >
                 <div class="card-header" style="padding-left: 15px;"  data-toggle="collapse" href="#collapseTag" role="button" aria-expanded="false" aria-controls="collapseExample">
                    <h2>{{headingTitleFinal}}</h2>
-                  <div class="clearfix">
-                  </div>
+                   <div class="clearfix">
+                   </div>
                 </div>
                 <div id="collapseTag" class="panel-collapse collapse in">
                     <div class="panel-body">                      
@@ -18,17 +18,17 @@
                           ></MasterAdministrator>
                        </div>
                        <div class="panel-footer">
-                         <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar test</button> 
+                         <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
                        </div>
                     </div>
                 </div>
-            </div>
+        </div>
     </div>
 
     <div v-if="flagUploadData == true" class="card-header-actions">
       <button type="button"  data-toggle="modal" data-target=".bs-example-modal-import"   class="btn btn-success btn-xs show-modal">Subir data</button> 
     </div>    
-    <TableMaf :header="header" :data="data" :tableTitle="tableTitle" ref="tableMaf" :useMassiveSelector="useMassiveSelector" ></TableMaf>
+    <TableMaf :header="header" :data="data" :tableTitle="tableTitle" ref="tableMaf" :useMassiveSelector="useMassiveSelector"  :searchOption="searchOptionTableMaf"  ></TableMaf>
   
     <!-- Modal subida de archivos .CSV -->
     <div id="myModal" class="modal fade bs-example-modal-import" tabindex="-1" role="dialog" aria-hidden="true">
@@ -193,7 +193,7 @@
                   <button type="button"  class="btn btn-light" @click="cancelProccess">Cancelar</button>  
               </div>
               <div v-if="nowStep == 1">
-                 <button type="button" class="btn btn-success btn-xs float-right" @click="showColumnMapping" >Continuar</button> 
+                 <button type="button" class="btn btn-success btn-xs float-right" @click="showColumnMapping" >Continuar </button> 
               </div>    
               <div v-if="nowStep == 2">                               
                  <button type="button" class="btn btn-success btn-xs float-right" v-if="flagColumnMapping == true"  @click="importData()">Importar </button>
@@ -248,6 +248,8 @@ export default {
     progressBarValue: Number,
     loadSummary: Array,
     uploadFunction: Function,
+    showSearchSection: Boolean,    
+    searchOptionTableMaf: Boolean,
   },
 
 
@@ -571,9 +573,7 @@ export default {
         $('#myModal').modal('show');
 
       }
-    },
-
-
+    }, 
   }
 };
 </script>
