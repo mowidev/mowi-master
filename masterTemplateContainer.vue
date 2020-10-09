@@ -347,15 +347,21 @@ export default {
         var startSearch=true
         //Dar formato a los filtros generando objetos con los siguientes atributos: name, value, operator
         for (let index = 0; index <  this.filters.length; index++) {
+            
             if(this.filters[index].isRequired == true && this.filters[index].vModel == undefined ){
                 startSearch =false
             }else{
               var filter={}
                 if(this.filters[index].selectField == true){
                     filter.name = this.filters[index].name
-                    filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
-                    filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'                    
-                    selectedFilters.push(filter)
+                    if( this.filters[index].vModel){
+                      filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
+                      filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'  
+                      selectedFilters.push(filter)
+                    }
+                    // filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
+                    // filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'                    
+                   
                 }  
             }          
         }
