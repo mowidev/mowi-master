@@ -1,14 +1,14 @@
 <template>
     <div :class="_styles.formGroup">
       <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> : </label>
-        <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="col-md-3 col-sm-6 col-xs-12">
             <select class="form-control"  v-model="opSelected" >
-                    <option                   
-                    v-for="(op,index) in _operators"
-                    :key="index"
-                    v-on:input="returnDataOperator" 
-                    :value="op.value"
-                    >{{op.label}}</option>
+                <option                   
+                v-for="(op,index) in _operators"
+                :key="index"
+                v-on:input="returnDataOperator" 
+                :value="op.value"
+                >{{op.label}}</option>
             </select>
         </div>    
         

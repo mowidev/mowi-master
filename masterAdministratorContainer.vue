@@ -2,10 +2,10 @@
   <div> 
     <!--se renderizan los campos para la búsqueda -->
     <div v-for="(item, i) in filters" :key="`A-${i}`">
-      <div style="margin-top: 10px;" v-if="item.filterType == 'dateComponent' && item.selectField == true"> <dateComponent :label="item.label" :isRequired="item.isRequired" :dateRange="item.dateRange"  :styles="item.styles" :mode="item.mode" v-model="item.vModel" :isVisible="item.isVisible" :selectDate="item.selectedDate" /> </div>
-      <div style="margin-top: 10px;" v-if="item.filterType == 'listComponent' && item.selectField == true"> <listComponent :label="item.label" :isRequired="item.isRequired" :value="item.value" :content="item.content" :styles="item.styles" v-model="item.vModel" :isVisible="item.isVisible" :selectedValue="item.selectedValue" /> </div>
-      <div style="margin-top: 10px;" v-if="item.filterType == 'searchComponent' && item.selectField == true"> <searchComponent :label="item.label" :isRequired="item.isRequired" :value="item.value" :arrayData="item.arrayData" :displayNameKey="item.displayNameKey" v-model="item.vModel" :service="item.service" :callBackData="item.callBackData" :addNewValue="item.addNewValue" /> </div>
-      <div style="margin-top: 10px;" v-if="item.filterType == 'inputComponent' && item.selectField == true"> <inputComponent :type="item.type" :isRequired="item.isRequired" :valueInput="item.valueInput"  :label="item.label" :validation="item.validation"  :nameInput="item.nameImput" :callbackData="item.callbackData" 
+      <div  style="margin-top: 10px;" v-if="item.filterType == 'dateComponent' && item.selectField == true"> <dateComponent :label="item.label" :isRequired="item.isRequired" :dateRange="item.dateRange"  :styles="item.styles" :mode="item.mode" v-model="item.vModel" :isVisible="item.isVisible" :selectDate="item.selectedDate" :ref="item.name" /> </div>
+      <div  style="margin-top: 10px;" v-if="item.filterType == 'listComponent' && item.selectField == true"> <listComponent :label="item.label" :isRequired="item.isRequired" :multipleSelection="item.multipleSelection" :value="item.value" :content="item.content" :styles="item.styles" v-model="item.vModel" :isVisible="item.isVisible" :selectedValue="item.selectedValue" :ref="item.name" /> </div>
+      <div  style="margin-top: 10px;" v-if="item.filterType == 'searchComponent' && item.selectField == true"> <searchComponent :label="item.label" :isRequired="item.isRequired" :value="item.value" :arrayData="item.arrayData" :displayNameKey="item.displayNameKey" v-model="item.vModel" :service="item.service" :callBackData="item.callBackData" :addNewValue="item.addNewValue" :ref="item.name" /> </div>
+      <div  style="margin-top: 10px;" v-if="item.filterType == 'inputComponent' && item.selectField == true"> <inputComponent :type="item.type" :isRequired="item.isRequired" :valueInput="item.valueInput"  :label="item.label" :validation="item.validation"  :nameInput="item.nameImput" :callbackData="item.callbackData"  :ref="item.name"
        :textArea="item.textArea" :styles="item.styles" 
        v-model="item.vModel" /> </div>        
     </div>
@@ -38,7 +38,14 @@ export default {
 
   },
   methods: {
-
+    async setContentListComponent(data, nameRef){
+       console.log("refffffffffffffffffffffffffffffffff 2::::", this.$refs)
+       //var variable=nameRef
+       //console.log("ref 3 ", ref )
+       //console.log("ref 4", data)
+       //this.$refs.status[0].updateContent(data);
+       this.$refs[nameRef][0].updateContent(data);
+    },
   }
 };
 </script>

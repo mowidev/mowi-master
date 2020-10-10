@@ -15,6 +15,8 @@
                           <MasterAdministrator
                             :filters="filters"          
                             :buttonFilter="buttonFilter"
+                            
+                            ref ="masterAdministartor"
                           ></MasterAdministrator>
                        </div>
                        <div class="panel-footer">
@@ -28,7 +30,13 @@
     <div v-if="flagUploadData == true" class="card-header-actions">
       <button type="button"  data-toggle="modal" data-target=".bs-example-modal-import"   class="btn btn-success btn-xs show-modal">Subir data</button> 
     </div>    
-    <TableMaf :header="header" :data="data" :tableTitle="tableTitle" ref="tableMaf" :useMassiveSelector="useMassiveSelector"  :searchOption="searchOptionTableMaf"  ></TableMaf>
+    <TableMaf 
+    :header="header" 
+    :data="data" 
+    :tableTitle="tableTitle" 
+    ref="tableMaf" 
+    :useMassiveSelector="useMassiveSelector"  
+    :searchOption="tableSearch"  ></TableMaf>
   
     <!-- Modal subida de archivos .CSV -->
     <div id="myModal" class="modal fade bs-example-modal-import" tabindex="-1" role="dialog" aria-hidden="true">
@@ -249,7 +257,8 @@ export default {
     loadSummary: Array,
     uploadFunction: Function,
     showSearchSection: Boolean,    
-    searchOptionTableMaf: Boolean,
+    tableSearch: Boolean,
+    //setContent: Function,
   },
 
 
@@ -304,6 +313,11 @@ export default {
         return response;
       })
     },
+    setContentListComponent(array, name){
+      this.$refs.masterAdministartor.setContentListComponent(array, name);
+        
+    },
+    
     returnData(){
       for (let i = 0; i < this.filters.length; i++) {
        
@@ -345,6 +359,7 @@ export default {
         var finalArray=[]
         var selectedFilters=[]
         var startSearch=true
+        console.log('check filteeeeers ', this.filters)
         //Dar formato a los filtros generando objetos con los siguientes atributos: name, value, operator
         for (let index = 0; index <  this.filters.length; index++) {
             
@@ -368,6 +383,7 @@ export default {
         //la búsqueda de registros solo se dará si el campo startSearch == true
         if(startSearch == true){
             //consultar servicio
+            console.log('filter final:::::', selectedFilters)
             arrayData =await this.dataLoadFunction(selectedFilters)
 
             //dar el formato a los datos

@@ -3,15 +3,24 @@
     <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> :</label>
     <div :class="_styles.container">
 
+      <!-- <select class="form-control" :value="value"  v-validate="'required'">
+        <option value="test0">Todos</option>
+        <option
+          v-for="(select,index) in _content"
+          :key="index"
+          v-on:input="returnData" 
+          :value="select.value"          
+        >{{select.label}}</option>
+      </select> -->
         <treeselect     
           v-model="valueTest"
           v-on:input="returnData" 
           :value-consists-of="valueConsistsOf"
-          :multiple="true"
+          :multiple="_multipleSelection"
           :options="arrayOptions" />
       </div>
+    </div>
   </div>
- 
 </template>
 
 <script>
@@ -28,7 +37,7 @@ import Treeselect from '@riophae/vue-treeselect';
 
 export default {
   name: "listComponent",
-  props:['label','content','styles','isVisible','selectedValue', 'value','isRequired']  ,
+  props:['label','content','styles','isVisible','selectedValue', 'value','isRequired','multipleSelection']  ,
   components: {
       Treeselect,
   },
@@ -54,7 +63,9 @@ export default {
     variable:'',
     valueConsistsOf: 'ALL_WITH_INDETERMINATE',
     arrayOptions:[],
-    valueTest:null
+    valueTest:null,
+    transicion:[],
+    _multipleSelection: false,
 
   }),
   created () {
@@ -66,14 +77,21 @@ export default {
     this.isVisible? this._isVisible = this.isVisible : this._isVisible = this.default.isVisible
     this.selectedValue? this._selectedValue = this.selectedValue : this._selectedValue = this.default.selectedValue
     this.isRequired? this._isRequired = this.isRequired : this._isRequired = this.default.isRequired
-    this.arrayOptions = this.tranforForSelectTree(this.content)
+    var transicion = this.content
+    // this.arrayOptions = this.tranforForSelectTree(this.content)
+    this.arrayOptions = this.tranforForSelectTree(transicion) 
+    this.multipleSelection? this._multipleSelection = this.multipleSelection : this._multipleSelection = false
+
  },
   methods:{
     returnData(){
    
         this.$emit('input', this.valueTest);
     },
-    
+    updateContent (newContent){
+      this.arrayOptions = this.tranforForSelectTree(newContent) 
+      //this.content = newContent
+    },
     tranforForSelectTree(content) {
       return _.map(content,(item)=>{
         var response = {
