@@ -14,8 +14,7 @@
                        <div class="panel-body" style="padding-bottom:5px; padding-top: 10px;">
                           <MasterAdministrator
                             :filters="filters"          
-                            :buttonFilter="buttonFilter"
-                            
+                            :buttonFilter="buttonFilter"                           
                             ref ="masterAdministartor"
                           ></MasterAdministrator>
                        </div>

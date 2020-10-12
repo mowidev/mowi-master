@@ -16,7 +16,6 @@
           {{item[displayNameKey]}}
         </div>
       </div>
-      
     </div>
  </div> 
 
@@ -91,6 +90,12 @@ Validator.localize("es", es);
             var ctx = this;
             clearTimeout(this.timeout);
             this.timeout = setTimeout(function(){ctx.getItem();}, 600);
+          },
+
+          async updateContent (newContent){
+            console.log('entró a updateContent', newContent)
+            this._arrayData = newContent
+            await this.getItem()
           },
           async getItem() {    
              var ctx=this;

@@ -1,7 +1,7 @@
 <template>
     <div :class="_styles.formGroup">
       <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> : </label>
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div v-if="_showOp == true" class="col-md-3 col-sm-6 col-xs-12">
             <select class="form-control"  v-model="opSelected" >
                 <option                   
                 v-for="(op,index) in _operators"
@@ -55,7 +55,7 @@ Validator.localize("es", es);
 
     export default {
         name: "inputComponent",
-        props: ['type','valueInput','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired'],
+        props: ['type','valueInput','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired','showOp'],
         
         components: {
           Value,
@@ -74,6 +74,7 @@ Validator.localize("es", es);
             callbackData:"",
             textArea:false,
             isRequired:false,
+            showOp: true,
             styles:{ formGroup:'form-group col-md-6', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-6 col-sm-6 col-xs-12'},          
           },
 
@@ -100,6 +101,7 @@ Validator.localize("es", es);
             _isVisible:true,
             _typeInput:'',
             _isRequired:'',
+            _showOp:'',
         }),
 
 
@@ -135,6 +137,7 @@ Validator.localize("es", es);
           this._nameInput = this.label 
           this.isRequired? this._isRequired = this.isRequired : this._isRequired = this.default.isRequired
           this.validation? this._validation = this.validation : this._validation = this.default.validation
+          this.showOp != null? this._showOp = this.showOp : this._showOp = this.default.showOp  
           //operadores
           if(this._type == 'numeric'){
             this._operators = [
@@ -154,6 +157,7 @@ Validator.localize("es", es);
             this.opSelected = 'include'
           }
 
+         
           //this.$validator.localize('es', this.dict);
           this._typeInput = this._type;
           this.dataInput(this.valueInput);
