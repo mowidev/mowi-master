@@ -41,13 +41,13 @@ export default {
     async setContentListComponent(data, nameRef){
        console.log("refffffffffffffffffffffffffffffffff 2::::", this.$refs)
        console.log("name ", nameRef)
-       //var variable=nameRef
-       //console.log("ref 3 ", ref )
-       //console.log("ref 4", data)
-       //this.$refs.status[0].updateContent(data);
-       this.$refs[nameRef][0].updateContent(data);
-      
+       this.$refs[nameRef][0].updateContent(data);      
     },
+    // async clearValue( nameRef){
+    //    console.log("name clear ", nameRef)
+    //    this.$refs[nameRef][0].clearValue();  
+    // },
+     
   }
-};
+}
 </script>

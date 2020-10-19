@@ -206,6 +206,9 @@ Validator.localize("es", es);
                 }
                 });
             },
+            async clearValue(){
+                this.valueInputData= ""
+            }
 
 
         },

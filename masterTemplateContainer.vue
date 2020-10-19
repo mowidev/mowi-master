@@ -298,8 +298,7 @@ export default {
                 keyboard: false
             });
         });
-    });
-     
+    });  
   },
   methods: {
 
@@ -313,10 +312,11 @@ export default {
       })
     },
     setContentListComponent(array, name){
-      this.$refs.masterAdministartor.setContentListComponent(array, name);
-        
+      this.$refs.masterAdministartor.setContentListComponent(array, name);        
     },
-    
+    clearValue( name){
+      this.$refs.masterAdministartor.clearValue(name);        
+    },
     returnData(){
       for (let i = 0; i < this.filters.length; i++) {
        
@@ -371,6 +371,7 @@ export default {
                     if( this.filters[index].vModel){
                       filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
                       filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'  
+                      this.filters[index].filterType == 'inputComponent'? filter.type = this.filters[index].type : filter.type = null
                       selectedFilters.push(filter)
                     }
                     // filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
@@ -395,6 +396,7 @@ export default {
         else{
           alert('Debe completar los campos obligatorios(*) para inciar la búsqueda')
         }
+        //this.filters =[]
         this.isLoading = false;
     },
 
@@ -594,7 +596,7 @@ export default {
         $('#myModal').modal('show');
 
       }
-    }, 
+    },
   }
 };
 </script>
