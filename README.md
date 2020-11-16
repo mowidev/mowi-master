@@ -151,4 +151,37 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
   * {label:'Vacío',value:'null' }
 
 
+**4.1.3 Ejemplo de función para búsqueda**
+**4.2 Sección de importación**
+Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
+
+* flagUploadData
+* registerFields
+* loadSummary
+* progressBarValue
+* uploadFunction
+
+
+**4.2.1 Pasos para implementar**
+* Paso 1: Setear la propiedad flagUploadData con true
+* Paso 2: Setear la propiedad con un arreglo de los campos del registro que se espera importar, cada objeto del arreglo debe tener la siguiente estructura
+`registerFields:[
+       {
+               name://nombre del campo que se desea guardar
+	   displayValue: //valor que se expone en la pantalla
+       }
+]
+`
+* Paso 3: Configurar la propiedad uploadFunction, se debe declarar una función para esta propiedad.
+La propiedad deberá incluir el servicio que se consumirá para la subida masiva de los registros, en este paso se debe setear los atributos del arreglo que se envía en la propiedad loadSummary:
+`
+this.loadSummary[0].total = array.length //total de registros subidos
+this.loadSummary[0].successful = //cantidad de registros subidos exitosos
+this.loadSummary[0].errors = //cantidad de errores
+this.loadSummary[0].detail = //detalle de errores
+`
+
+
+
+
 
