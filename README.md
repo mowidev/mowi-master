@@ -246,7 +246,7 @@ Se cargará la primera fila (cabecera) y la segunda fila (primer registro) del a
 En el segundo paso se debe asignar qué campos de los registros del archivo .csv se importarán, para esto el usuario debe seleccionar el nombre del campo asignado a cada columna de la segunda fila del archivo .csv
 
 Por ejemplo, el siguiente archivo .csv :
-** tiene en la cabecera (primera fila): telefono, ,id,nombre
-** tiene en el primer registro (segunda fila): 9902566,19,1,Jhon
+   ** tiene en la cabecera (primera fila): telefono, ,id,nombre
+   ** tiene en el primer registro (segunda fila): 9902566,19,1,Jhon
 
-![GitHub Logo](/im8.png)
+![GitHub Logo](/im12.png)
