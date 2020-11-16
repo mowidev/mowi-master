@@ -7,14 +7,17 @@ Versión | 2.1.11
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
-![GitHub Logo](/im1.png)
+
 
 **2. Modo de instalación**
 * Copiar el comando de instalación en la consola del proyecto: `npm i mowi-master --save`
 * Importar la librería en el archivo .vue:
 `import MasterTemplate from 'mowi-master';`
+![GitHub Logo](/im1.png)
 * Declarar la variable en la sección de componentes:
 `MasterTemplate`
+
+![GitHub Logo](/im2.png)
 
 **3. Propiedades del componente**
 **3.1 Propiedades generales**
@@ -107,12 +110,18 @@ El componente presenta tres secciones generales:
 * Sección 2: Botón para importar datos
 * Sección 3: Tabla de resultados
 
+![GitHub Logo](/im3.png)
+
 En el archivo .vue, el componente mowi-master debe implementarse de la siguiente manera 
+
+![GitHub Logo](/im4.png)
 
 **4.1 Sección de búsqueda**
 **4.1.1 Implementación**
 Para implementar el buscador es necesario:
 Figura Ejemplo. Ejemplo de implementación
+
+![GitHub Logo](/im5.png)
 
 * Paso 1: Setear la propiedad showSearchSection = true en el componente
 En la Figura Ejemplo , en la línea 26, la propiedad this.showSearchSection = true
@@ -154,6 +163,7 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
 
 
 **4.1.3 Ejemplo de función para búsqueda**
+![GitHub Logo](/im6.png)
 **4.2 Sección de importación**
 Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
 
@@ -185,4 +195,4 @@ La propiedad deberá incluir el servicio que se consumirá para la subida masiva
     this.loadSummary[0].detail = //detalle de errores
 
 **4.2.2 Ejemplo de función uploadFunction**
-
+![GitHub Logo](/im7.png)
