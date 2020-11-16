@@ -135,15 +135,16 @@ Configurar la propiedad dataLoadFunction, se debe declarar una función para est
 
 El componente mowi-master retorna un arreglo con los filtros con la siguiente estructura:
 
-`[
-{
+``` 
+	[
+	{
 	name: //nombre del filtro
 	value: //valor ingresado para el filtro
 	operator: //si el tipo de filtro incluye operator
 	type: //tipo numeric o text, si el filtro es de tipo inputComponent
-}
-]`
-
+	}
+	]
+``` 
 
 **4.1.2 Uso de operadores**
 Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente tabla presenta los operadores para los filtros del tipo inputComponent  para texto (text) y números (numeric)
@@ -194,15 +195,42 @@ Para la sección de importación, se deben configurar las siguientes propiedades
 * Paso 3: Configurar la propiedad uploadFunction, se debe declarar una función para esta propiedad.
 La propiedad deberá incluir el servicio que se consumirá para la subida masiva de los registros, en este paso se debe setear los atributos del arreglo que se envía en la propiedad loadSummary:
 
-    
+```html    
     this.loadSummary[0].total = array.length //total de registros subidos
     this.loadSummary[0].successful = //cantidad de registros subidos exitosos
     this.loadSummary[0].errors = //cantidad de errores
     this.loadSummary[0].detail = //detalle de errores
+``` 
 
 **4.2.2 Ejemplo de función uploadFunction**
 
 ![GitHub Logo](/im7.png)
 
-
-
+```html 
+    /**
+     * uploadFunction() en esta función se realizará la subida masiva,
+     * la lógica del consumo del servicio y los datos del resumen se debe desarrollar en esta funciónm
+     */
+    uploadFunction(array){
+        this.progressBarValue = 0    
+        var progress =100/array.length
+        for (let index = 0; index < array.length; index++) {
+            setTimeout(() => {
+            //usar el servicio acá
+            console.log('arreglo test', array[index])
+            //luego de usar, sumar el progreso
+            this.progressBarValue += progress    
+            console.log('progressbar ', this.progressBarValue)        
+            }, 1000);
+        }
+        var arrayDetail=['Este es un test','Este tambien']
+        //cargar datos de resumen
+        this.loadSummary[0].total = array.length
+        this.loadSummary[0].successful = 2
+        this.loadSummary[0].errors = 1
+        this.loadSummary[0].detail = arrayDetail
+        //retornar true
+        return true     
+        
+    },
+``` 
