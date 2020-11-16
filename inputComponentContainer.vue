@@ -1,7 +1,7 @@
 <template>
     <div :class="_styles.formGroup">
       <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> : </label>
-        <div v-if="_showOp == true" class="col-md-3 col-sm-6 col-xs-12">
+        <div v-if="_showOp == true" class="col-md-4 col-sm-6 col-xs-12">
             <select class="form-control"  v-model="opSelected" >
                 <option                   
                 v-for="(op,index) in _operators"
@@ -75,7 +75,7 @@ Validator.localize("es", es);
             textArea:false,
             isRequired:false,
             showOp: true,
-            styles:{ formGroup:'form-group col-md-6', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-6 col-sm-6 col-xs-12'},          
+            styles:{ formGroup:'form-group col-md-12 ', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-5 col-sm-6 col-xs-12'},          
           },
 
 

@@ -1,6 +1,6 @@
 {
   "name": "mowi-master",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "component developed for CRUD optimization",
   "main": "index.js",
   "scripts": {

@@ -49,7 +49,7 @@ Validator.localize("es", es);
             callBackData:'',
             addNewValue:'Y',
             vModel: "default",
-            styles:{ formGroup:'form-group col-md-6', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-6 col-sm-6 col-xs-12'},
+            styles:{ formGroup:'form-group col-md-12', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-6 col-sm-6 col-xs-12'},
             isVisible: true,
             isRequired:false, 
           },
