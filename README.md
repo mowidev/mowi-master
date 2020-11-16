@@ -7,6 +7,8 @@ Versión | 2.1.11
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
+![GitHub Logo](/im1.png)
+
 **2. Modo de instalación**
 * Copiar el comando de instalación en la consola del proyecto: `npm i mowi-master --save`
 * Importar la librería en el archivo .vue:
@@ -165,23 +167,22 @@ Para la sección de importación, se deben configurar las siguientes propiedades
 **4.2.1 Pasos para implementar**
 * Paso 1: Setear la propiedad flagUploadData con true
 * Paso 2: Setear la propiedad con un arreglo de los campos del registro que se espera importar, cada objeto del arreglo debe tener la siguiente estructura
-`registerFields:[
-       {
-               name://nombre del campo que se desea guardar
-	   displayValue: //valor que se expone en la pantalla
-       }
-]
-`
+    
+    registerFields:[
+    {
+    name://nombre del campo que se desea guardar
+    displayValue: //valor que se expone en la pantalla
+    }
+    ]
+
 * Paso 3: Configurar la propiedad uploadFunction, se debe declarar una función para esta propiedad.
 La propiedad deberá incluir el servicio que se consumirá para la subida masiva de los registros, en este paso se debe setear los atributos del arreglo que se envía en la propiedad loadSummary:
-`
-this.loadSummary[0].total = array.length //total de registros subidos
-this.loadSummary[0].successful = //cantidad de registros subidos exitosos
-this.loadSummary[0].errors = //cantidad de errores
-this.loadSummary[0].detail = //detalle de errores
-`
+
+    
+    this.loadSummary[0].total = array.length //total de registros subidos
+    this.loadSummary[0].successful = //cantidad de registros subidos exitosos
+    this.loadSummary[0].errors = //cantidad de errores
+    this.loadSummary[0].detail = //detalle de errores
+
 **4.2.2 Ejemplo de función uploadFunction**
-
-
-
 
