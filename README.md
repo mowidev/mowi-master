@@ -99,3 +99,56 @@ selectField | Booleano para determinar si este filtro debe pertenecer a la secci
 isRequerid | Booleano para determinar si este filtro es obligatorio para la búsqueda del componente
 
 
+**4. Modo de uso**
+El componente presenta tres secciones generales:
+* Sección 1: Búsqueda
+* Sección 2: Botón para importar datos
+* Sección 3: Tabla de resultados
+
+En el archivo .vue, el componente mowi-master debe implementarse de la siguiente manera 
+
+**4.1 Sección de búsqueda**
+**4.1.1 Implementación**
+Para implementar el buscador es necesario:
+Figura Ejemplo. Ejemplo de implementación
+
+* Paso 1: Setear la propiedad showSearchSection = true en el componente
+En la Figura Ejemplo , en la línea 26, la propiedad this.showSearchSection = true
+
+* Paso 2:
+Los filtros del buscador deben ser definidos en la propiedad filters. En la Figura Ejemplo , en la línea 16 se asignan los filtros
+
+* Paso 3:
+Configurar la propiedad dataLoadFunction, se debe declarar una función para esta propiedad. 
+
+El componente mowi-master retorna un arreglo con los filtros con la siguiente estructura:
+
+`[
+{
+	name: //nombre del filtro
+	value: //valor ingresado para el filtro
+	operator: //si el tipo de filtro incluye operator
+	type: //tipo numeric o text, si el filtro es de tipo inputComponent
+}
+]`
+
+
+**4.1.2 Uso de operadores**
+Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente tabla presenta los operadores para los filtros del tipo inputComponent  para texto (text) y números (numeric)
+
+* Operadores numéricos
+  * {label:'Igual a',value:'='}
+  * {label:'Mayor que', value:'>'}
+  * {label:'Menor que', value:'<'}
+  * {label:'Mayor igual', value:'>='}
+  * {label:'Menor igual',value:'<=' }
+
+* Operadores de texto
+  * {label:'Contiene',value:'include'}
+  * {label:'Es igual a', value:'equals'}
+  * {label:'Empieza con', value:'%like'} 
+  * {label:'Termina con', value:'like%'} 
+  * {label:'Vacío',value:'null' }
+
+
+
