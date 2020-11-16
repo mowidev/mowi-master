@@ -2,8 +2,9 @@
 
 **1. Data general**
 Component developed for search
-Versión | 2.1.11
+Propiedad | Detalle
 ------------ | -------------
+Versión | 2.1.11
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
@@ -234,3 +235,18 @@ La propiedad deberá incluir el servicio que se consumirá para la subida masiva
         
     },
 ``` 
+
+**4.2.3 Ejemplo de uso desde la pantalla**
+* Paso 1: Clic en el botón Subir Data, se abrirá el siguiente modal con 4 pasos, seleccionar un archivo (solo .csv) y clic en continuar
+
+![GitHub Logo](/im8.png)
+
+* Paso 2:
+Se cargará la primera fila (cabecera) y la segunda fila (primer registro) del archivo .csv
+En el segundo paso se debe asignar qué campos de los registros del archivo .csv se importarán, para esto el usuario debe seleccionar el nombre del campo asignado a cada columna de la segunda fila del archivo .csv
+
+Por ejemplo, el siguiente archivo .csv :
+** tiene en la cabecera (primera fila): telefono, ,id,nombre
+** tiene en el primer registro (segunda fila): 9902566,19,1,Jhon
+
+![GitHub Logo](/im8.png)
