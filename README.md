@@ -39,6 +39,63 @@ tableSearch | Boolean | Mostrar/ ocultar cabecera de búsqueda en la tabla | No
 La propiedad Filters admite 4 tipos de filtros para búsqueda
 * Filtro tipo buscador
 
-name | nombre de filtro
+Propiedad | descripción
 ------------ | -------------
+name | nombre de filtro
 filterType | tipo de filtro
+label  | Etiqueta que verá el usuario para el filtro
+arrayData | Arreglo de datos que se consultan en el filtro
+displayNameKey | nombre del atributo que se mostrará como etiqueta en el filtro
+addNewValue | Atributo para permitir agregar nuevos valores en filtro de búsqueda (addNewValue =‘Y’ para agregar)
+operators | Booleano para determinar si el filtro  necesita operadores (consultar lista de operadores)
+selectField | Booleano para determinar si este filtro debe pertenecer a la sección de búsqueda del componente 
+isVisible | Booleano para determinar si este filtro es visible en la sección de búsqueda del componente
+isRequerid | Booleano para determinar si este filtro es obligatorio para la búsqueda del componente
+
+
+* Filtro tipo input
+
+Propiedad | descripción
+------------ | -------------
+name | Nombre del filtro
+filterType | Tipo de filtro
+type | Tipo de input para determinar los operadores (numeric o text)
+valueInput | Valor capturado en el filtro
+label | Etiqueta que verá el usuario para el filtro
+validation | Objeto para definir validaciones al filtro (consultar lista de validaciones)
+textArea | Booleano para determinar si el filtro es del tipo área de texto
+operators | Booleano para determinar si el filtro  necesita operadores (consultar lista de operadores)
+selectField | Booleano para determinar si este filtro debe pertenecer a la sección de búsqueda del componente 
+isRequerid | Booleano para determinar si este filtro es obligatorio para la búsqueda del componente
+
+
+* Filtro tipo list
+
+Propiedad | descripción
+------------ | -------------
+name | Nombre del filtro
+filterType | Tipo de filtro 
+label | Etiqueta que verá el usuario para el filtro
+selectedValue | Valor capturado en el filtro
+isVisible | Booleano para determinar si la etiqueta del filtro debe ser visible 
+content | Arreglo con las opciones del filtro,para cada opción se debe especificar el campo value(valor que se obtiene) y label(etiqueta de la opción en el filtro)
+operators | Booleano para determinar si el filtro  necesita operadores (consultar lista de operadores)
+selectField | Booleano para determinar si este filtro debe pertenecer a la sección de búsqueda del componente 
+isRequerid | Booleano para determinar si este filtro es obligatorio para la búsqueda del componente
+
+
+* Filtro tipo date
+
+Propiedad | descripción
+------------ | -------------
+name | Nombre del filtro
+filterType | Tipo de filtro
+label | Etiqueta que verá el usuario para el filtro
+dateRange | Atributo para establecer las fechas de inicio y fin de un rango
+mode | range(capturar un rango de fechas), single(capturar solo una fecha)
+selectedDate | Valor capturado por el filtro
+operators | Booleano para determinar si el filtro  necesita operadores (consultar lista de operadores)
+selectField | Booleano para determinar si este filtro debe pertenecer a la sección de búsqueda del componente 
+isRequerid | Booleano para determinar si este filtro es obligatorio para la búsqueda del componente
+
+
