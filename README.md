@@ -13,6 +13,7 @@ Descripción | Componente desarrollado para implementar propiedades CRUD de una 
 * Copiar el comando de instalación en la consola del proyecto: `npm i mowi-master --save`
 * Importar la librería en el archivo .vue:
 `import MasterTemplate from 'mowi-master';`
+
 ![GitHub Logo](/im1.png)
 * Declarar la variable en la sección de componentes:
 `MasterTemplate`
@@ -163,6 +164,7 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
 
 
 **4.1.3 Ejemplo de función para búsqueda**
+
 ![GitHub Logo](/im6.png)
 **4.2 Sección de importación**
 Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
@@ -176,14 +178,18 @@ Para la sección de importación, se deben configurar las siguientes propiedades
 
 **4.2.1 Pasos para implementar**
 * Paso 1: Setear la propiedad flagUploadData con true
-* Paso 2: Setear la propiedad con un arreglo de los campos del registro que se espera importar, cada objeto del arreglo debe tener la siguiente estructura
-    
+* Paso 2: Setear la propiedad con un arreglo de los campos del registro que se espera importar, cada objeto del arreglo debe tener la siguiente estructura:
+
+```html
     registerFields:[
     {
     name://nombre del campo que se desea guardar
     displayValue: //valor que se expone en la pantalla
     }
     ]
+```  
+    
+
 
 * Paso 3: Configurar la propiedad uploadFunction, se debe declarar una función para esta propiedad.
 La propiedad deberá incluir el servicio que se consumirá para la subida masiva de los registros, en este paso se debe setear los atributos del arreglo que se envía en la propiedad loadSummary:
@@ -199,9 +205,4 @@ La propiedad deberá incluir el servicio que se consumirá para la subida masiva
 ![GitHub Logo](/im7.png)
 
 
-```html
-<html>
-  <head>
-  </head>
-</html>
-```  
+
