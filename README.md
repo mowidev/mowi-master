@@ -180,7 +180,7 @@ this.loadSummary[0].successful = //cantidad de registros subidos exitosos
 this.loadSummary[0].errors = //cantidad de errores
 this.loadSummary[0].detail = //detalle de errores
 `
-
+**4.2.2 Ejemplo de función uploadFunction**
 
 
 
