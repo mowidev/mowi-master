@@ -195,4 +195,13 @@ La propiedad deberá incluir el servicio que se consumirá para la subida masiva
     this.loadSummary[0].detail = //detalle de errores
 
 **4.2.2 Ejemplo de función uploadFunction**
+
 ![GitHub Logo](/im7.png)
+
+
+```html
+<html>
+  <head>
+  </head>
+</html>
+```  
