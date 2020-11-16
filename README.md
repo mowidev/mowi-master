@@ -264,3 +264,56 @@ En este ejemplo se asignaron sólo dos campos, clic en importar
 * Paso 4: El modal muestra el consolidado de la subida masiva
 
 ![GitHub Logo](/im11.png)
+
+**4.3 Sección de tabla**
+
+* data
+* header
+* setDataTable
+* useMassiveSelector
+
+**4.3.1 Ejemplo de implementación de sección**
+* Paso 1:Configurar las columnas de la tabla, para esto setear la propiedad header del componente. Los atributos del arreglo que irá en la propiedad debe respetar el siguiente formato:
+
+```html 
+          this.colum = [
+              {
+	   name://nombre del atributo
+	   label: //cabecera que se mostrará en la tabla 
+               find:1, //Para activar la cabecera de búsqueda 1:true/ 2:false
+               sort:1  //Para activar la opción de ordenar los registros 1:true/ 2:false
+              },
+          ]
+```
+
+* Paso 2: Configurar el formato de los objetos que se mostrarán en la tabla. Para esto, se debe setear la propiedad setDataTable con una función con la siguiente estructura:
+```html 
+        /**
+*  La función setDataTable() es la encargada de darle el formato necesario al arreglo obtenido de la búsqueda
+        *  el formato es definido por el programador
+        *  se envía al componente <MasterTemplate> en la propiedad setDataTable
+        *  */ 
+        setDataTable(registers){
+          var ctx = this;
+          var formattedRegisters = [];
+          suggestions.forEach(item => {
+            var newRecord = {};
+            var client= item.idClient
+            newRecord.client = client.fullname;
+            newRecord.phone= client.phone;
+            newRecord.content = item.content;
+            formattedRegisters.push(newRecord);
+          }); 
+          return formattedRegisters
+        },
+```
+
+Los atributos de los objetos del arreglo formattedRegisters deben tener los mismos valores que los del campo value de los objetos de la propiedad header del componente
+
+* Paso 3: Crear la función refreshData para actualizar los elementos de la tabla, utilizar las propiedad $refs para setear la data que se muestra en la tabla
+
+```
+        async refreshData(response){
+          this.$refs.mowiMaster.setInitialData(response)
+        },
+```
