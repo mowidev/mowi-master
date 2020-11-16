@@ -250,3 +250,17 @@ Por ejemplo, el siguiente archivo .csv :
    ** tiene en el primer registro (segunda fila): 9902566,19,1,Jhon
 
 ![GitHub Logo](/im12.png)
+
+Cada columna de la cabecera puede ser asignada para importar.
+En este paso es posible cambiar campos (eliminar los campos seleccionados) o regresar al paso anterior (para seleccionar otro archivo)
+
+![GitHub Logo](/im9.png)
+
+En este ejemplo se asignaron sólo dos campos, clic en importar
+* Paso 3: La barra de estado se cargará hasta finalizar la subida masiva
+
+![GitHub Logo](/im10.png)
+
+* Paso 4: El modal muestra el consolidado de la subida masiva
+
+![GitHub Logo](/im11.png)
