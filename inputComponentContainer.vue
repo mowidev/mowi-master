@@ -19,7 +19,7 @@
             v-on:input="returnData"
             v-validate="'required|min:3'"
             :name="_nameInput"
-            class="form-control col-md-7 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
 
             <!--input-->
             <input  v-if="_textArea==false" :type="_typeInput"
@@ -28,7 +28,7 @@
             v-validate="'required|min:3'"
             v-on:change="onSubmit"
             :name="_nameInput"
-            class="form-control col-md-7 col-xs-12" spellcheck="false"  autocomplete="off">
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
             <div id="input" class="invalid-feedback">
                 {{errors.first(_nameInput)}}
             </div>
@@ -75,7 +75,8 @@ Validator.localize("es", es);
             textArea:false,
             isRequired:false,
             showOp: true,
-            styles:{ formGroup:'form-group col-md-12 ', label:'control-label col-md-3 col-sm-3 col-xs-12', container:'col-md-5 col-sm-6 col-xs-12'},          
+            styles:{ formGroup:'form-group col-md-6 ', label:'control-label col-md-4 col-sm-3 col-xs-12', container:'col-md-4 col-sm-6 col-xs-12'},       
+            styles:{ formGroup:'form-group col-md-6 col-sm-12 col-xs-12', label:'control-label col-md-4 col-sm-4 col-xs-12', container:'col-md-4 col-sm-8 col-xs-12'},   
           },
 
 
