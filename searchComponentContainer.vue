@@ -1,6 +1,6 @@
 <template>
  <div v-if="_isVisible  == true" :class="_styles.formGroup">
-   <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> :</label>
+   <label :class="_styles.label" >{{_label}} </label>
     <div :class="_styles.container">
       
       <input
@@ -81,6 +81,14 @@ Validator.localize("es", es);
            this.vModel? this._vModel = this.vModel : this._vModel = this.default.vModel
            this.isVisible? this._isVisible = this.isVisible : this._isVisible = this.default.isVisible           
            this.isRequired? this._isRequired = this.isRequired : this._isRequired = this.default.isRequired
+           if(this.label){
+                if(this._isRequired == true){
+                    this._label = this.label + "*:"
+                }
+                else{
+                    this._label = this.label + ":"
+                }
+           }
            //cargar items para visualizarlos
            this.getItem();
            this.items = _.cloneDeep(this._arrayData);

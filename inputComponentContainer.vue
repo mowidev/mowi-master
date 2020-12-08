@@ -1,6 +1,6 @@
 <template>
     <div :class="_styles.formGroup">
-      <label :class="_styles.label" >{{_label}} <span v-if="_isRequired == true" > *</span> : </label>
+      <label :class="_styles.label" >{{_label}}</label>
         <div v-if="_showOp == true" class="col-md-4 col-sm-6 col-xs-12">
             <select class="form-control"  v-model="opSelected" >
                 <option                   
@@ -17,7 +17,7 @@
             <textarea v-if="_textArea==true" :type="typeInput"
             v-model="variable"
             v-on:input="returnData"
-            v-validate="'required|min:3'"
+            v-validate="$data._minimumCharacters"
             :name="_nameInput"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
 
@@ -25,7 +25,7 @@
             <input  v-if="_textArea==false" :type="_typeInput"
             v-model="variable"
             v-on:input="returnData"
-            v-validate="'required|min:3'"
+            v-validate="'required|min:'+numberX"
             v-on:change="onSubmit"
             :name="_nameInput"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
@@ -55,7 +55,7 @@ Validator.localize("es", es);
 
     export default {
         name: "inputComponent",
-        props: ['type','valueInput','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired','showOp'],
+        props: ['type','valueInput','label','validation','nameInput','callbackData','textArea','styles','operador','isRequired','showOp','minimumCharacters'],
         
         components: {
           Value,
@@ -76,10 +76,9 @@ Validator.localize("es", es);
             isRequired:false,
             showOp: true,
             styles:{ formGroup:'form-group col-md-6 ', label:'control-label col-md-4 col-sm-3 col-xs-12', container:'col-md-4 col-sm-6 col-xs-12'},       
-            styles:{ formGroup:'form-group col-md-6 col-sm-12 col-xs-12', label:'control-label col-md-4 col-sm-4 col-xs-12', container:'col-md-4 col-sm-8 col-xs-12'},   
+            styles:{ formGroup:'form-group col-md-6 col-sm-12 col-xs-12', label:'control-label col-md-4 col-sm-4 col-xs-12', container:'col-md-4 col-sm-8 col-xs-12'},  
           },
-
-
+         
           //variables declaradas para el funcionamiento del componente
           _operators:[],
           opSelected:'',
@@ -103,6 +102,7 @@ Validator.localize("es", es);
             _typeInput:'',
             _isRequired:'',
             _showOp:'',
+            numberX: 3,
         }),
 
 
@@ -119,24 +119,26 @@ Validator.localize("es", es);
 
         created () {
             
-          //acá se validan los atributos customizables, de no existir un campo customizable, se asigna el valor por defecto
+
           this.label? this._label = this.label : this._label = this.default.label
           this.type? this._type = this.type : this._type = this.default.type
           this.styles? this._styles = this.styles : this._styles = this.default.styles
-        //   if(this.styles != undefined || this.styles != null || this.styles != '' ){
-        //       this.styles.formGroup? this._styles.formGroup = this.styles.formGroup : this._styles.formGroup = this.default.styles.formGroup
-        //       this.styles.label? this._styles.label = this.styles.label : this._styles.label = this.default.styles.label
-        //       this.styles.container? this._styles.container = this.styles.comtainer : this._styles.container = this.default.styles.comtainer
-        //   }else{
-        //       this._styles = this.default.styles
-        //   }
           this.vModel? this._vModel = this.vModel : this._vModel = this.default.vModel
           this.textArea? this._textArea = this.textArea : this._textArea = this.default.textArea
           this.isVisible? this._isVisible = this.isVisible : this._isVisible = this.default.isVisible
           this.valueInput? this._valueInput = this.valueInput : this._valueInput = this.default.valueInput
           this.callbackData? this._callbackData = this.callbackData : this._callbackData = this.default.callbackData
+          this.minimumCharacters? this.numberX = this.minimumCharacters : null
           this._nameInput = this.label 
           this.isRequired? this._isRequired = this.isRequired : this._isRequired = this.default.isRequired
+          if(this.label){
+              if(this._isRequired == true){
+                  this._label = this.label + "*:"
+              }
+              else{
+                  this._label = this.label + ":"
+              }
+          }
           this.validation? this._validation = this.validation : this._validation = this.default.validation
           this.showOp != null? this._showOp = this.showOp : this._showOp = this.default.showOp  
           //operadores
@@ -242,4 +244,6 @@ textarea.form-control {
 small.form-text.text-muted{
     color: #ec0000 !important;
     }
+
+
 </style>
