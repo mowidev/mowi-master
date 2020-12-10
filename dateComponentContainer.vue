@@ -81,6 +81,11 @@ export default {
         this.$emit('input', selectedRange);
       }
     },
+
+    clearValue(){
+        this.variable =undefined   
+        this.$emit('input', undefined);
+    }
   }
 };
 </script>

@@ -130,8 +130,9 @@ Validator.localize("es", es);
             this.variable = item[this.displayNameKey]
             this.isFocus = false;
           },
-          cleanText(){
-             this.variable = '';
+          clearValue(){
+             this.variable = undefined
+             this.$emit('input', undefined);
           },
           setText(name){
              this.variable = name;

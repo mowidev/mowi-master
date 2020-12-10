@@ -92,8 +92,7 @@ export default {
 
  },
   methods:{
-    returnData(){
-   
+    returnData(){   
         this.$emit('input', this.valueTest);
     },
     updateContent (newContent){
@@ -108,6 +107,10 @@ export default {
           }
         return response;
       })
+    },
+    async clearValue(){
+        this.valueTest= undefined
+        this.$emit('input', undefined);
     },
 
   }  

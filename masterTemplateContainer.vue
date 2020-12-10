@@ -20,6 +20,7 @@
                        </div>
                        <div class="panel-footer">
                          <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
+                         <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>                          
                        </div>
                     </div>
                 </div>
@@ -314,8 +315,18 @@ export default {
     setContentListComponent(array, name){
       this.$refs.masterAdministartor.setContentListComponent(array, name);        
     },
-    clearValue( name){
-      this.$refs.masterAdministartor.clearValue(name);        
+    clearSearch( ){
+      console.log('filtros para revisar ', this.filters)
+      for (let index = 0; index < this.filters.length; index++) {
+        if(this.filters[index].filterType == 'inputComponent' && this.filters[index].vModel ){
+          this.$refs.masterAdministartor.clearValue(this.filters[index].name);
+        }
+        if(this.filters[index].filterType != 'inputComponent' ){
+          this.$refs.masterAdministartor.clearValue(this.filters[index].name);
+        }
+             
+      }
+         
     },
     returnData(){
       for (let i = 0; i < this.filters.length; i++) {
@@ -597,6 +608,8 @@ export default {
 
       }
     },
+
+
   }
 };
 </script>

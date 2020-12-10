@@ -1,6 +1,9 @@
 <template>
     <div :class="_styles.formGroup">
-      <label :class="_styles.label" >{{_label}}</label>
+        <!--Etiqueta-->  
+        <label :class="_styles.label" >{{_label}}</label>
+        
+        <!--Lista de Operadores-->
         <div v-if="_showOp == true" class="col-md-4 col-sm-6 col-xs-12">
             <select class="form-control"  v-model="opSelected" >
                 <option                   
@@ -12,7 +15,41 @@
             </select>
         </div>    
         
-        <div :class="_styles.container">
+        <!--Caja de texto, si se mostrarán operadores-->
+        <div  v-if="_showOp == true" :class="_styles.container">
+            <!--TextArea-->
+            <textarea v-if="_textArea==true" :type="typeInput"
+            v-model="variable"
+            v-on:input="returnData"
+            v-validate="$data._minimumCharacters"
+            :name="_nameInput"
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
+
+            <!--input-->
+            <input  v-if="_textArea==false && this.minimumCharacters > 0" :type="_typeInput"
+            v-model="variable"
+            v-on:input="returnData"
+            v-validate="'required|min:'+numberX"
+            v-on:change="onSubmit"
+            :name="_nameInput"
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
+
+            <input  v-if="_textArea==false && this.minimumCharacters == 0" :type="_typeInput"
+            v-model="variable"
+            v-on:input="returnData"
+            v-on:change="onSubmit"
+            :name="_nameInput"
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
+
+
+            <div id="input" class="invalid-feedback">
+                {{errors.first(_nameInput)}}
+            </div>
+        </div>  
+
+
+        <!--Caja de texto, si no se mostrarán operadores-->
+        <div  v-if="_showOp == false"  class="col-md-8 col-sm-8 col-xs-12">
             <!--TextArea-->
             <textarea v-if="_textArea==true" :type="typeInput"
             v-model="variable"
@@ -25,14 +62,16 @@
             <input  v-if="_textArea==false" :type="_typeInput"
             v-model="variable"
             v-on:input="returnData"
-            v-validate="'required|min:'+numberX"
             v-on:change="onSubmit"
             :name="_nameInput"
+            v-validate="'min:'+numberX"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
-            <div id="input" class="invalid-feedback">
+            <div id="input" class="invalid-feedback" >
                 {{errors.first(_nameInput)}}
             </div>
-        </div>    
+        </div>  
+        
+        </div>  
     </div>
 
 
@@ -173,7 +212,10 @@ Validator.localize("es", es);
                 data.operator=this.opSelected
                 data.variable=this.variable
                 this.$emit('input', data);
-                console.log('seleccionado  ', this.opSelected)
+                if(data.variable == "" && this.isRequired == false){
+                    this.clearValue()
+                }
+                console.log('seleccionado 1 ', data)
             },
             returnDataOperator(){
                 console.log('seleccionado  ', this.opSelected)
@@ -210,9 +252,9 @@ Validator.localize("es", es);
                 });
             },
             async clearValue(){
-                this.valueInputData= ""
-            }
-
+                this.variable = undefined             
+                this.errors.clear();
+            },  
 
         },
 
