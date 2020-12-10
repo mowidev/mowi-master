@@ -3,28 +3,28 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
 
     <div  v-if="showSearchSection == true" class="card" id="accordion" style="padding-bottom: 0px;">
-        <div class="panel panel-default" >
+      
                 <div class="card-header" style="padding-left: 15px;"  data-toggle="collapse" href="#collapseTag" role="button" aria-expanded="false" aria-controls="collapseExample">
                    <h2>{{headingTitleFinal}}</h2>
                    <div class="clearfix">
                    </div>
                 </div>
-                <div id="collapseTag" class="panel-collapse collapse in">
-                    <div class="panel-body">                      
-                       <div class="panel-body" style="padding-bottom:5px; padding-top: 10px;">
+                <div id="collapseTag" class="card-collapse collapse in">
+                    <div class="card-body">                      
+                       <div class="card-body" style="padding-bottom:5px; padding-top: 10px;">
                           <MasterAdministrator
                             :filters="filters"          
                             :buttonFilter="buttonFilter"                           
                             ref ="masterAdministartor"
                           ></MasterAdministrator>
                        </div>
-                       <div class="panel-footer">
+                       <div class="card-body">
                          <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
                          <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>                          
                        </div>
                     </div>
                 </div>
-        </div>
+      
     </div>
 
     <div v-if="flagUploadData == true" class="card-header-actions">
@@ -168,14 +168,14 @@
                             </div>
                           </div>
                           <div class="card" id="accordion" style="padding-bottom: 0px; " v-if="showDetailStep4 == true">
-                            <div class="panel panel-default" >
+                            <div class="card card-default" >
                                     <div class="card-header" style="padding-left: 15px;"  data-toggle="collapse" href="#collapseConsole" role="button" aria-expanded="false" aria-controls="collapseExample">
                                       <h2>Detalle</h2>
                                       <div class="clearfix">
                                       </div>
                                     </div>
-                                    <div id="collapseConsole" class="panel-collapse collapse in" style="padding-top: 10px; max-height: 200px; overflow: auto;"> 
-                                        <div class="panel-body">                      
+                                    <div id="collapseConsole" class="card-collapse collapse in" style="padding-top: 10px; max-height: 200px; overflow: auto;"> 
+                                        <div class="card-body">                      
                                             <table id="searcher-datatable-Charla" class="table table-striped table-bordered dataTable no-footer dtr-inline" role="grid" >
                                               <tbody>
                                                   <tr v-for="(item,index) in loadSummary[0].detail" >

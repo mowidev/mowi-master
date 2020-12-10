@@ -1,20 +1,14 @@
 <template>
     <div :class="_styles.formGroup">
-        <!--Etiqueta-->  
-        <label :class="_styles.label" >{{_label}}</label>
-        
+        <!--Etiqueta-->
+        <label :class="_styles.label">{{_label}}</label>
         <!--Lista de Operadores-->
-        <div v-if="_showOp == true" class="col-md-4 col-sm-6 col-xs-12">
-            <select class="form-control"  v-model="opSelected" >
-                <option                   
-                v-for="(op,index) in _operators"
-                :key="index"
-                v-on:input="returnDataOperator" 
-                :value="op.value"
-                >{{op.label}}</option>
+        <div v-if="_showOp == true" class="col-lg-4 col-md-6 col-12">
+            <select class="form-control" v-model="opSelected">
+                <option v-for="(op,index) in _operators" :key="index" v-on:input="returnDataOperator"
+                :value="op.value">{{op.label}}</option>
             </select>
-        </div>    
-        
+        </div>
         <!--Caja de texto, si se mostrarán operadores-->
         <div  v-if="_showOp == true" :class="_styles.container">
             <!--TextArea-->
@@ -48,8 +42,6 @@
                 {{errors.first(_nameInput)}}
             </div>
         </div>  
-
-
         <!--Caja de texto, si no se mostrarán operadores-->
         <div  v-if="_showOp == false"  class="col-md-8 col-sm-8 col-xs-12">
             <!--TextArea-->
@@ -81,12 +73,8 @@
             <div id="input" class="invalid-feedback" >
                 {{errors.first(_nameInput)}}
             </div>
-        </div>  
-        
-        </div>  
-    </div>
-
-
+        </div> 
+    </div>  
 </template>
 
 <script>
