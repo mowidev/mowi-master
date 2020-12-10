@@ -25,8 +25,8 @@
             :name="_nameInput"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
 
-            <!--input-->
-            <input  v-if="_textArea==false && this.minimumCharacters > 0" :type="_typeInput"
+            <!--input obligatorio-->
+            <input  v-if="_textArea==false && this.isRequired == true > 0" :type="_typeInput"
             v-model="variable"
             v-on:input="returnData"
             v-validate="'required|min:'+numberX"
@@ -34,11 +34,13 @@
             :name="_nameInput"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
 
-            <input  v-if="_textArea==false && this.minimumCharacters == 0" :type="_typeInput"
+            <!--input no obligatorio -->
+            <input  v-if="_textArea==false && this.isRequired == false" :type="_typeInput"
             v-model="variable"
             v-on:input="returnData"
             v-on:change="onSubmit"
             :name="_nameInput"
+            v-validate="'min:'+numberX"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
 
 
@@ -58,14 +60,24 @@
             :name="_nameInput"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off"></textarea>
 
-            <!--input-->
-            <input  v-if="_textArea==false" :type="_typeInput"
+            <!--input obligatorio-->
+            <input  v-if="_textArea==false && this.isRequired == true > 0" :type="_typeInput"
+            v-model="variable"
+            v-on:input="returnData"
+            v-validate="'required|min:'+numberX"
+            v-on:change="onSubmit"
+            :name="_nameInput"
+            class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
+
+            <!--input no obligatorio-->
+            <input  v-if="_textArea==false && this.isRequired == false" :type="_typeInput"
             v-model="variable"
             v-on:input="returnData"
             v-on:change="onSubmit"
             :name="_nameInput"
             v-validate="'min:'+numberX"
             class="form-control col-md-12 col-xs-12" spellcheck="false"  autocomplete="off">
+
             <div id="input" class="invalid-feedback" >
                 {{errors.first(_nameInput)}}
             </div>
@@ -254,6 +266,7 @@ Validator.localize("es", es);
             async clearValue(){
                 this.variable = undefined             
                 this.errors.clear();
+                this.$emit('input', undefined);
             },  
 
         },

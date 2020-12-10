@@ -318,12 +318,12 @@ export default {
     clearSearch( ){
       console.log('filtros para revisar ', this.filters)
       for (let index = 0; index < this.filters.length; index++) {
-        if(this.filters[index].filterType == 'inputComponent' && this.filters[index].vModel ){
+        // if(this.filters[index].filterType == 'inputComponent' && this.filters[index].vModel ){
+        //   this.$refs.masterAdministartor.clearValue(this.filters[index].name);
+        // }
+        //if(this.filters[index].filterType != 'inputComponent' ){
           this.$refs.masterAdministartor.clearValue(this.filters[index].name);
-        }
-        if(this.filters[index].filterType != 'inputComponent' ){
-          this.$refs.masterAdministartor.clearValue(this.filters[index].name);
-        }
+        //}
              
       }
          
