@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="general-message is-success is-small-popup">
-      <h2 class="general-message-title load-points-animation">Cargando<span>.</span><span>.</span><span>.</span></h2>
+      <!-- <h2 class="general-message-title load-points-animation">{{_label}}<span>.</span><span>.</span><span>.</span></h2> -->
+      <h2 id="labelLoading" ref="refLabel" :class="classNew" >{{_label}}<span>.</span><span>.</span><span>.</span></h2>      
     </div>
     <div class="captureClient_component-black_blanket"></div>
   </div>
@@ -10,8 +11,25 @@
 <script>
     export default {
         name: "loadingComponent",
+        props: ['label','classLoading'],
+        
         data: () => ({
+          //acá se definen todos los atributos customizables del componente en este objeto default
+          default:{            
+            label: "Cargando",
+            class: "general-message-title load-points-animation",        
+          },
+          _label:"",
+          classNew:"",
         }),
+        created () {           
+          this.label? this._label = this.label : this._label = this.default.label
+          if(this.classLoading){
+            this.classNew = this.classLoading
+          } else{
+            this.classNew = this.default.class
+          }
+        },
     }
 </script>
 

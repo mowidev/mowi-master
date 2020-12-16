@@ -1,6 +1,8 @@
 <template>
   <div>
-    <LoadingComponent v-if="isLoading"></LoadingComponent>
+    <LoadingComponent v-if="isLoading" 
+    :label="loadingComponentLabel"
+    :classLoading="loadingComponentClass"></LoadingComponent>
 
     <div  v-if="showSearchSection == true" class="card" id="accordion" style="padding-bottom: 0px;">
       
@@ -258,6 +260,8 @@ export default {
     uploadFunction: Function,
     showSearchSection: Boolean,    
     tableSearch: Boolean,
+    loadingComponentLabel: String,
+    loadingComponentClass: String,
     //setContent: Function,
   },
 
