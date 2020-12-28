@@ -41,6 +41,8 @@ uploadFunction | Function | Función donde se encuentra la lógica | No
 setContent | Function | Función para actualizar el contenido de un componente del tipo lista |No
 showSearchSection | Boolean | Mostrar/ocultar sección de búsqueda | No
 tableSearch | Boolean | Mostrar/ ocultar cabecera de búsqueda en la tabla | No
+loadingComponentLabel | String | Texto del mensaje en la pantalla de carga | No
+loadingComponentClass | Strring | Nombre de la clase qeu se desea usar en la pantalla de carga | No
 
 **3.2 Propiedades de los tipos de filtros**
 La propiedad Filters admite 4 tipos de filtros para búsqueda
@@ -111,6 +113,8 @@ El componente presenta tres secciones generales:
 * Sección 1: Búsqueda
 * Sección 2: Botón para importar datos
 * Sección 3: Tabla de resultados
+* Sección 4: Personalización pantalla de carga
+
 
 ![GitHub Logo](/im3.png)
 
@@ -124,6 +128,17 @@ Para implementar el buscador es necesario:
 Figura Ejemplo. Ejemplo de implementación
 
 ![GitHub Logo](/im5.png)
+
+``` 
+	[
+	{
+	name: //nombre del filtro
+	value: //valor ingresado para el filtro
+	operator: //si el tipo de filtro incluye operator
+	type: //tipo numeric o text, si el filtro es de tipo inputComponent
+	}
+	]
+``` 
 
 * Paso 1: Setear la propiedad showSearchSection = true en el componente
 En la Figura Ejemplo , en la línea 26, la propiedad this.showSearchSection = true
