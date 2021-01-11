@@ -109,7 +109,7 @@ isRequerid | Booleano para determinar si este filtro es obligatorio para la bús
 
 
 **4. Modo de uso**
-El componente presenta tres secciones generales:
+El componente presenta cuatro secciones generales:
 * Sección 1: Búsqueda
 * Sección 2: Botón para importar datos
 * Sección 3: Tabla de resultados
@@ -149,7 +149,8 @@ En el archivo .vue, el componente mowi-master debe implementarse de la siguiente
 **4.1 Sección de búsqueda**
 
 **4.1.1 Implementación**
-Para implementar el buscador es necesario:
+Para implementar el buscador es necesario definir los filtros del buscador en la propiedad filters del componente:
+
 Figura Ejemplo. Ejemplo de implementación
 
 ![GitHub Logo](/im5.png)
@@ -208,6 +209,45 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
 **4.1.3 Ejemplo de función para búsqueda**
 
 ![GitHub Logo](/im6.png)
+
+```
+        /**
+        *  La función getParticipants() es la encargada de la búsqueda de registros
+        *  se envía al componente <MasterTemplate> en la propiedad dataLoadFunction
+        *  */ 
+        async getParticipants(filters) {
+          console.log('getClients: ', filters)
+          var look =[]
+          if(filters != null || filters != undefined){
+               /**variables declaradas para el funcionamiento de la función */
+              var filter={}
+              /**declarar acá los parámetros necesarios para el servicio a utilizar
+               * se filtra el arreglo recibido (selectFilters) para obtener el atributo con el nombre deseado
+               */
+              var fullName  =_.filter(filters,{'name':'fullName'});
+              var documentNumber  =_.filter(filters,{'name':'documentNumber'});
+              var email  =_.filter(filters,{'name':'email'});
+              var phone  =_.filter(filters,{'name':'phone'});
+              /**obtener los valores y agregarlos en el objeto filter */
+              console.log('test', fullName[0])
+              fullName.length > 0 ?  filter.fullName = fullName[0].value.variable : null
+              documentNumber.length > 0 ?  filter.documentNumber = documentNumber[0].value.variable : null
+              email.length > 0 ?  filter.email = email[0].value.variable : null
+              phone.length > 0 ?  filter.phone = phone[0].value.variable : null
+              filter.isClient = true
+
+              console.log('filter obtenido ', filter)
+              // /**consultar servicio con el objeto filter  */
+              var response1 = await consultServices('searchClients','POST',filter);  
+              response1.status == 200 ? look = response1.clients : null
+          }else{
+              look = await consultServices('listClients','POST',{});   
+          }
+          return look
+
+        },
+```
+
 **4.2 Sección de importación**
 Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
 
@@ -357,3 +397,11 @@ Los atributos de los objetos del arreglo formattedRegisters deben tener los mism
           this.$refs.mowiMaster.setInitialData(response)
         },
 ```
+
+**4.4 Sección de modal de loading**
+Permite editar el testo del modal de carga y la clase que se aplicará al componente
+
+Propiedad |  Descripción | Ejemplo
+------------ | ------------- | ------------ 
+loadingComponentClass | Permite asignar una propiedad al modal de carga |form_test
+loadingComponentLabel | Permite asignar un mensaje al modal de carga |'Hola mundo'
