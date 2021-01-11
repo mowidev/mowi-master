@@ -4,7 +4,7 @@
 Component developed for search
 Propiedad | Detalle
 ------------ | -------------
-Versión | 2.1.11
+Versión | 2.1.17
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
@@ -122,7 +122,32 @@ En el archivo .vue, el componente mowi-master debe implementarse de la siguiente
 
 ![GitHub Logo](/im4.png)
 
+``` 
+        <masterTemplate
+          :filters="propsTemplateManangerOrder.filters"     
+          :setDataTable="this.setDataTable"
+          :dataLoadFunction="this.getOrders"
+          :header="colum"
+          :useMassiveSelector="useMassiveSelector"          
+          :customActions="propsTemplateManangerOrder.customActions"  
+          :data="orders"
+          :tableTitle="titleTable"
+          :flagUploadData="flagUploadData"
+          :registerFields="registerFields"          
+          :progressBarValue="progressBarValue"          
+          :loadSummary ="loadSummary"
+          :uploadFunction="this.uploadFunction"
+          :setContent="this.setContentListComponent"
+          :showSearchSection="this.showSearchSection"
+          :tableSearch="this.searchOptionTableMaf"
+          :loadingComponentLabel="this.loadingComponentLabel"
+          :loadingComponentClass="this.loadingComponentClass"
+        ></masterTemplate>      
+      </div>
+``` 
+
 **4.1 Sección de búsqueda**
+
 **4.1.1 Implementación**
 Para implementar el buscador es necesario:
 Figura Ejemplo. Ejemplo de implementación
@@ -140,7 +165,7 @@ Figura Ejemplo. Ejemplo de implementación
 	]
 ``` 
 
-* Paso 1: Setear la propiedad showSearchSection = true en el componente
+* Paso 1: Setear la propiedad showSearchSelection = true en el componente
 En la Figura Ejemplo , en la línea 26, la propiedad this.showSearchSection = true
 
 * Paso 2:
