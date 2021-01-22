@@ -12,14 +12,8 @@ Descripción | Componente desarrollado para implementar propiedades CRUD de una 
 
 **2. Modo de instalación**
 * Copiar el comando de instalación en la consola del proyecto: `npm i mowi-master --save`
-* Importar la librería en el archivo .vue:
-`import MasterTemplate from 'mowi-master';`
 
-![GitHub Logo](/im1.png)
-* Declarar la variable en la sección de componentes:
-`MasterTemplate`
 
-![GitHub Logo](/im2.png)
 
 **3. Propiedades del componente**
 **3.1 Propiedades generales**
@@ -115,8 +109,16 @@ El componente presenta cuatro secciones generales:
 * Sección 3: Tabla de resultados
 * Sección 4: Personalización pantalla de carga
 
+**Ejemplo básico de implementación:**
+En el siguiente ejemplo se implementará el componente mowi-master para la gestión de registros llamados ‘noticias’.  El ejemplo básico incluye la implementación de la sección de búsqueda de registros por filtros y la tabla de registros (Figura 1)
+Figura 1: componente mowi implementado
 
-![GitHub Logo](/im3.png)
+**Pasos para la implementación del componente en un archivo .vue: **
+**Customización de la sección de búsqueda por filtros **
+**Formato de la tabla**
+**Llenado de tabla**
+**Búsqueda de registros**
+
 
 En el archivo .vue, el componente mowi-master debe implementarse de la siguiente manera 
 
