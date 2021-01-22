@@ -103,6 +103,7 @@ isRequerid | Booleano para determinar si este filtro es obligatorio para la bús
 
 
 **4. Modo de uso**
+
 El componente presenta cuatro secciones generales:
 * Sección 1: Búsqueda
 * Sección 2: Botón para importar datos
@@ -110,7 +111,7 @@ El componente presenta cuatro secciones generales:
 * Sección 4: Personalización pantalla de carga
 
 
-###Ejemplo básico de implementación:
+**Ejemplo básico de implementación:**
 
 
 En el siguiente ejemplo se implementará el componente mowi-master para la gestión de registros llamados ‘noticias’. 
@@ -119,16 +120,16 @@ El ejemplo básico incluye la implementación de la sección de búsqueda de reg
 
 Figura 1: componente mowi implementado
 
-###Pasos para la implementación del componente en un archivo .vue: 
+**Pasos para la implementación del componente en un archivo .vue: **
 
 
-###Customización de la sección de búsqueda por filtros:
+***Customización de la sección de búsqueda por filtros:**
 
 
-###Formato de la tabla:
+***Formato de la tabla:**
 
 
-###Llenado de tabla:
+**Llenado de tabla:**
 
 
 ###Búsqueda de registros:
