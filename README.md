@@ -120,7 +120,7 @@ El ejemplo básico incluye la implementación de la sección de búsqueda de reg
 
 Figura 1: componente mowi implementado
 
-**Pasos para la implementación del componente en un archivo .vue: **
+**Pasos para la implementación del componente en un archivo .vue:**
 
 
 **Customización de la sección de búsqueda por filtros:**
