@@ -404,7 +404,7 @@ En este ejemplo se asignaron sólo dos campos, clic en importar
           }); 
           return formattedRegisters
         },
-```
+``` 
 
 Los atributos de los objetos del arreglo formattedRegisters deben tener los mismos valores que los del campo value de los objetos de la propiedad header del componente
 
