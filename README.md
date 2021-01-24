@@ -150,15 +150,80 @@ Estructura básica de un filtro:
 
 ``` 
 	[
-	{
-	name: //nombre del filtro
-	value: //valor ingresado para el filtro
-	operator: //si el tipo de filtro incluye operator
-	type: //tipo numeric o text, si el filtro es de tipo inputComponent
-	}
+		{
+			name: //nombre del filtro
+			value: //valor ingresado para el filtro
+			operator: //si el tipo de filtro incluye operator
+			type: //tipo numeric o text, si el filtro es de tipo inputComponent
+		}
 	]
 ``` 
 
+Ejemplo de arreglo de filtros:
+
+``` 
+filters: [              
+              {
+                name:'title',
+                filterType:'inputComponent',
+                type:"text",
+                valueInput: "",
+                etiqueta: true,
+                label: "Título",              
+                validation:{required:false, min:3},
+                callbackData:"",
+                textArea:false,
+                operators:true,
+                selectField:true,
+                isRequired :false,
+                showOp: false,        
+              },
+              {
+                name:'size',
+                filterType:'listComponent',
+                label: "Tamaño",
+                selectedValue:"",      
+                value:'', 
+                isVisible:true,          
+                content: [
+                  {
+                    value:'STANDART',
+                    label:'Estándar'
+                  },
+                  {
+                    value:'LARGE',
+                    label:'Grande'
+                  }
+                ],
+                operators:false,
+                selectField:true,
+                isRequired :false,
+                multipleSelection: false,
+              },  
+              {
+                name:'target',
+                filterType:'listComponent',
+                label: "Público Objetivo",
+                selectedValue:"",      
+                value:'', 
+                isVisible:true,          
+                content: [
+                  {
+                    value:'RIDER',
+                    label:'Rider'
+                  },
+                  {
+                    value:'CLIENT',
+                    label:'Cliente'
+                  }
+                ],
+                operators:false,
+                selectField:true,
+                isRequired :false,
+                multipleSelection: false,
+              },        
+            ],
+``` 
 
 
 **Formato de la tabla:**
@@ -169,6 +234,32 @@ Para definir el formato la tabla, se deben configurar necesariamente las siguien
 :header 
 
 Se debe setear con el arreglo que contiene la cabecera deseada
+
+Estructura básica del arreglo que contiene la cabecera deseada
+
+``` 
+	[
+		{
+			name: //nombre del filtro
+			value: //valor ingresado para el filtro
+			operator: //si el tipo de filtro incluye operator
+			type: //tipo numeric o text, si el filtro es de tipo inputComponent
+		}
+	]
+``` 
+
+Ejemplo de arreglo de cabecera:
+
+``` 
+          this.colum = [
+              {name:'title', label: 'Título', find:1, sort:1},
+              {name:'content', label: 'Contenido', find:1, sort:1},
+              {name:'target', label: 'Público objetivo', find:1, sort:1},
+              {name:'published', label: 'Publicada', find:1, sort:1},
+              {name:'size', label: 'Tamaño', find:1, sort:1},
+              {name:'actions', label: 'Acciones', find:0, sort:0},
+	  ]
+``` 
 
 :tableTitle
 
@@ -182,83 +273,95 @@ Para llenar la tabla, se requiere la consulta de registros desde una fuente de d
 
 En el componente, la propiedad :setDataTable recibe a la función encargada de darle el formato necesario al arreglo obtenido de la búsqueda. El formato es definido por el programador. En el ejemplo, la función setDataTable(news) será la función definida por el programador
 
+Ejemplo de función setDataTable()
+
+``` 
+        setDataTable(news){  
+          var ctx = this;
+          var formattedNews = [];
+          news.forEach(item => {
+            var newRecord = {};
+            newRecord.actions = (
+              <div class="d-flex justify-content-around">
+                <div class="btn-group" role="group">
+                  <button class="btn btn-secondary dropdown-toggle" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Acciones
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" onClick={()=>ctx.showEditModal(item)} data-toggle="modal" data-target=".bs-example-modal-lg">Editar</a>
+                    <a class="dropdown-item" onClick={()=>ctx.showDeleteModal(item)} data-toggle="modal" data-target=".bs-example-modal-del">Eliminar</a>
+                    { item.published ? <a class="dropdown-item" onClick={()=>ctx.setForm(item)} data-toggle="modal" data-target=".bs-example-modal-unpublish">Ocultar</a>
+                    :
+                    <a class="dropdown-item" onClick={()=>ctx.setForm(item)} data-toggle="modal" data-target=".bs-example-modal-publish">Publicar</a>
+                    }
+                  </div>
+                </div>
+              </div>
+            );
+            newRecord.title = item.title;
+            newRecord.content = item.content;
+            if(item.target){
+              newRecord.target = item.target == "CLIENT" ? 'Clientes' : 'Riders';
+            }else{
+              newRecord.target = '-'
+            }
+            newRecord.published = item.published ? 'Sí' : 'No';
+            if(item.size){
+              newRecord.size = item.size == "STANDART" ? 'Estandar' : 'Grande';
+            }else{
+              newRecord.size = '-'
+            }
+            formattedNews.push(newRecord);
+          }); 
+          return formattedNews
+        },
+``` 
+
 
 **Búsqueda de registros:**
 
 Para buscar registros con los filtros ingresados desde la sección de búsqueda, la propiedad :dataLoadFunction  recibe la función encargada de la búsqueda de registros. En el ejemplo, la función getNews (filters) será la función definida por el programador
 
-
-En el archivo .vue, el componente mowi-master debe implementarse de la siguiente manera 
-
-![GitHub Logo](/im4.png)
+Ejemplo de función getNews()
 
 ``` 
-        <masterTemplate
-          :filters="propsTemplateManangerOrder.filters"     
-          :setDataTable="this.setDataTable"
-          :dataLoadFunction="this.getOrders"
-          :header="colum"
-          :useMassiveSelector="useMassiveSelector"          
-          :customActions="propsTemplateManangerOrder.customActions"  
-          :data="orders"
-          :tableTitle="titleTable"
-          :flagUploadData="flagUploadData"
-          :registerFields="registerFields"          
-          :progressBarValue="progressBarValue"          
-          :loadSummary ="loadSummary"
-          :uploadFunction="this.uploadFunction"
-          :setContent="this.setContentListComponent"
-          :showSearchSection="this.showSearchSection"
-          :tableSearch="this.searchOptionTableMaf"
-          :loadingComponentLabel="this.loadingComponentLabel"
-          :loadingComponentClass="this.loadingComponentClass"
-        ></masterTemplate>      
-      </div>
+        async getNews(filters) {
+          console.log('filteeeeeeeeeeeeeers',filters )
+          var look =[]
+          if(filters != null || filters != undefined){
+               /**variables declaradas para el funcionamiento de la función */
+              var filter={}
+              /**declarar acá los parámetros necesarios para el servicio a utilizar
+               * se filtra el arreglo recibido (selectFilters) para obtener el atributo con el nombre deseado
+               */
+              var title  =_.filter(filters,{'name':'title'});
+              var target  =_.filter(filters,{'name':'target'});
+              var size  =_.filter(filters,{'name':'size'});
+              /**obtener los valores y agregarlos en el objeto filter */
+              title.length > 0 ?  filter.title = title[0].value : null
+              target.length > 0 ?  filter.target = target[0].value : null
+              size.length > 0 ?  filter.size = size[0].value : null
+
+              console.log('filter obtenido ', filter)
+              // /**consultar servicio con el objeto filter  */
+              look = await consultServices('searchNews','POST',filter);  
+          }else{
+              look = await consultServices('listNews','POST',{});   
+          }
+          
+          // /**retornar el nuevo arreglo */
+          return look
+        },
 ``` 
+
+
+
+
+
 
 **4.1 Sección de búsqueda**
 
-**4.1.1 Implementación**
-Para implementar el buscador es necesario definir los filtros del buscador en la propiedad filters del componente:
-
-Figura Ejemplo. Ejemplo de implementación
-
-![GitHub Logo](/im5.png)
-
-``` 
-	[
-	{
-	name: //nombre del filtro
-	value: //valor ingresado para el filtro
-	operator: //si el tipo de filtro incluye operator
-	type: //tipo numeric o text, si el filtro es de tipo inputComponent
-	}
-	]
-``` 
-
-* Paso 1: Setear la propiedad showSearchSelection = true en el componente
-En la Figura Ejemplo , en la línea 26, la propiedad this.showSearchSection = true
-
-* Paso 2:
-Los filtros del buscador deben ser definidos en la propiedad filters. En la Figura Ejemplo , en la línea 16 se asignan los filtros
-
-* Paso 3:
-Configurar la propiedad dataLoadFunction, se debe declarar una función para esta propiedad. 
-
-El componente mowi-master retorna un arreglo con los filtros con la siguiente estructura:
-
-``` 
-	[
-	{
-	name: //nombre del filtro
-	value: //valor ingresado para el filtro
-	operator: //si el tipo de filtro incluye operator
-	type: //tipo numeric o text, si el filtro es de tipo inputComponent
-	}
-	]
-``` 
-
-**4.1.2 Uso de operadores**
+**4.1.1 Uso de operadores**
 Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente tabla presenta los operadores para los filtros del tipo inputComponent  para texto (text) y números (numeric)
 
 * Operadores numéricos
@@ -276,47 +379,7 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
   * {label:'Vacío',value:'null' }
 
 
-**4.1.3 Ejemplo de función para búsqueda**
 
-![GitHub Logo](/im6.png)
-
-```
-        /**
-        *  La función getParticipants() es la encargada de la búsqueda de registros
-        *  se envía al componente <MasterTemplate> en la propiedad dataLoadFunction
-        *  */ 
-        async getParticipants(filters) {
-          console.log('getClients: ', filters)
-          var look =[]
-          if(filters != null || filters != undefined){
-               /**variables declaradas para el funcionamiento de la función */
-              var filter={}
-              /**declarar acá los parámetros necesarios para el servicio a utilizar
-               * se filtra el arreglo recibido (selectFilters) para obtener el atributo con el nombre deseado
-               */
-              var fullName  =_.filter(filters,{'name':'fullName'});
-              var documentNumber  =_.filter(filters,{'name':'documentNumber'});
-              var email  =_.filter(filters,{'name':'email'});
-              var phone  =_.filter(filters,{'name':'phone'});
-              /**obtener los valores y agregarlos en el objeto filter */
-              console.log('test', fullName[0])
-              fullName.length > 0 ?  filter.fullName = fullName[0].value.variable : null
-              documentNumber.length > 0 ?  filter.documentNumber = documentNumber[0].value.variable : null
-              email.length > 0 ?  filter.email = email[0].value.variable : null
-              phone.length > 0 ?  filter.phone = phone[0].value.variable : null
-              filter.isClient = true
-
-              console.log('filter obtenido ', filter)
-              // /**consultar servicio con el objeto filter  */
-              var response1 = await consultServices('searchClients','POST',filter);  
-              response1.status == 200 ? look = response1.clients : null
-          }else{
-              look = await consultServices('listClients','POST',{});   
-          }
-          return look
-
-        },
-```
 
 **4.2 Sección de importación**
 Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
