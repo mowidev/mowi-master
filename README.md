@@ -122,6 +122,24 @@ Figura 1: componente mowi implementado
 
 **Pasos para la implementación del componente en un archivo .vue:**
 
+* Paso 1 
+Importar la librería en el archivo .vue: import MasterTemplate from 'mowi-master';
+
+Img1.png
+
+* Paso 2
+
+Declarar la variable en la sección de componentes: MasterTemplate
+
+Img2.png
+
+* Paso 3
+
+Implementar el componente con el tag <MasterTemplate />
+
+Img3.png
+
+
 
 **Customización de la sección de búsqueda por filtros:**
 
