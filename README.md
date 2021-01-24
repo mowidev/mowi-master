@@ -122,26 +122,31 @@ Figura 1: componente mowi implementado
 
 **Pasos para la implementación del componente en un archivo .vue:**
 
-* Paso 1 
-Importar la librería en el archivo .vue: import MasterTemplate from 'mowi-master';
+* Paso 1: Importar la librería en el archivo .vue: import MasterTemplate from 'mowi-master';
 
 Img1.png
 
-* Paso 2
-
-Declarar la variable en la sección de componentes: MasterTemplate
+* Paso 2: Declarar la variable en la sección de componentes: MasterTemplate
 
 Img2.png
 
-* Paso 3
-
-Implementar el componente con el tag <MasterTemplate />
+* Paso 3: Implementar el componente con el tag <MasterTemplate />
 
 Img3.png
 
 
 
 **Customización de la sección de búsqueda por filtros:**
+
+La sección de búsqueda de filtros admite inputs de los tipos declarados en la sección, para agregar nuevos filtros se debe setear la propiedad filters (Figura 3 , línea ) con el arreglo de inptus. Para el ejemplo se incluye incluyen los siguientes filtros.
+
+Nombre del filtro | Ti pode filtro 
+------------ | -------------
+Título | input
+Tamaño | listComponent
+laPúblico Objetivo | listComponent
+
+
 
 
 **Formato de la tabla:**
