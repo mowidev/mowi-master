@@ -159,17 +159,20 @@ Figura 1: componente mowi implementado
 
 * Paso 3: Implementar el componente con el tag <MasterTemplate />
 
-Estructura básica de un filtro:
+Ejemplo
 
 ``` 
-	[
-		{
-			name: //nombre del filtro
-			value: //valor ingresado para el filtro
-			operator: //si el tipo de filtro incluye operator
-			type: //tipo numeric o text, si el filtro es de tipo inputComponent
-		}
-	]
+          <MasterTemplate
+            :filters="propsNews.filters"     
+            :setDataTable="this.setDataTable"
+            :dataLoadFunction="this.getNews"
+            :header="colum"
+            :useMassiveSelector="useMassiveSelector"
+            :customActions="propsNews.customActions"  
+            :data="this.news"
+            :tableTitle="titleTable"
+            :showSearchSection="this.showSearchSection"
+          ref="mowiMaster"/>
 ``` 
 
 
@@ -394,7 +397,7 @@ Ejemplo de función getNews()
 
 
 
-
+**Información adicional sobre las cuatro secciones**
 
 **4.1 Sección de búsqueda**
 
