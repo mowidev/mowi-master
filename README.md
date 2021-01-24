@@ -124,16 +124,53 @@ Figura 1: componente mowi implementado
 
 * Paso 1: Importar la librería en el archivo .vue: import MasterTemplate from 'mowi-master';
 
-Img1.png
+
+``` 
+	<script>
+  		import MasterTemplate from 'mowi-master';
+		.
+		.
+		.
+		.
+	</script>
+``` 
 
 * Paso 2: Declarar la variable en la sección de componentes: MasterTemplate
 
-Img2.png
+
+
+``` 
+  	export default {
+      		name: "usersContainer",
+      		components: {
+			LoadingComponent,
+			inputMaf,
+			SearchComponent,
+			MasterTemplate, 
+			ImageResize,
+			convert,
+		},
+		.
+		.
+		.
+		
+	}
+``` 
 
 * Paso 3: Implementar el componente con el tag <MasterTemplate />
 
-Img3.png
+Estructura básica de un filtro:
 
+``` 
+	[
+		{
+			name: //nombre del filtro
+			value: //valor ingresado para el filtro
+			operator: //si el tipo de filtro incluye operator
+			type: //tipo numeric o text, si el filtro es de tipo inputComponent
+		}
+	]
+``` 
 
 
 **Customización de la sección de búsqueda por filtros:**
@@ -382,6 +419,7 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
 
 
 **4.2 Sección de importación**
+
 Para la sección de importación, se deben configurar las siguientes propiedades del componente mowi-master
 
 * flagUploadData
