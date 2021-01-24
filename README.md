@@ -140,23 +140,52 @@ Img3.png
 
 La sección de búsqueda de filtros admite inputs de los tipos declarados en la sección, para agregar nuevos filtros se debe setear la propiedad filters (Figura 3 , línea ) con el arreglo de inptus. Para el ejemplo se incluye incluyen los siguientes filtros.
 
-Nombre del filtro | Ti pode filtro 
+Nombre del filtro | Tipo de filtro 
 ------------ | -------------
 Título | input
 Tamaño | listComponent
 laPúblico Objetivo | listComponent
 
+Estructura básica de un filtro:
+
+``` 
+	[
+	{
+	name: //nombre del filtro
+	value: //valor ingresado para el filtro
+	operator: //si el tipo de filtro incluye operator
+	type: //tipo numeric o text, si el filtro es de tipo inputComponent
+	}
+	]
+``` 
 
 
 
 **Formato de la tabla:**
 
+Para definir el formato la tabla, se deben configurar necesariamente las siguientes propiedades:
+
+
+:header 
+
+Se debe setear con el arreglo que contiene la cabecera deseada
+
+:tableTitle
+
+Se debe setear el título de la tabla
+
+
 
 **Llenado de tabla:**
+
+Para llenar la tabla, se requiere la consulta de registros desde una fuente de datos. El arreglo con los datos que poblaran la tabla debe ser formateado para mostrarse en el componente.
+
+En el componente, la propiedad :setDataTable recibe a la función encargada de darle el formato necesario al arreglo obtenido de la búsqueda. El formato es definido por el programador. En el ejemplo, la función setDataTable(news) será la función definida por el programador
 
 
 **Búsqueda de registros:**
 
+Para buscar registros con los filtros ingresados desde la sección de búsqueda, la propiedad :dataLoadFunction  recibe la función encargada de la búsqueda de registros. En el ejemplo, la función getNews (filters) será la función definida por el programador
 
 
 En el archivo .vue, el componente mowi-master debe implementarse de la siguiente manera 
