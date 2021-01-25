@@ -117,7 +117,7 @@ El componente presenta cuatro secciones generales:
 En el siguiente ejemplo se implementará el componente mowi-master para la gestión de registros llamados ‘noticias’. 
 El ejemplo básico incluye la implementación de la sección de búsqueda de registros por filtros y la tabla de registros.
 
-![GitHub Logo](/im0.png)
+![GitHub Logo](/img0.png)
 
 **Pasos para la implementación del componente en un archivo .vue:**
 
