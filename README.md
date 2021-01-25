@@ -143,12 +143,7 @@ Figura 1: componente mowi implementado
   	export default {
       		name: "usersContainer",
       		components: {
-			LoadingComponent,
-			inputMaf,
 			SearchComponent,
-			MasterTemplate, 
-			ImageResize,
-			convert,
 		},
 		.
 		.
@@ -163,12 +158,10 @@ Ejemplo
 
 ``` 
           <MasterTemplate
-            :filters="propsNews.filters"     
+            :filters="filters"     
             :setDataTable="this.setDataTable"
             :dataLoadFunction="this.getNews"
             :header="colum"
-            :useMassiveSelector="useMassiveSelector"
-            :customActions="propsNews.customActions"  
             :data="this.news"
             :tableTitle="titleTable"
             :showSearchSection="this.showSearchSection"
