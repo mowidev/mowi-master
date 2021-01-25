@@ -431,10 +431,10 @@ Para la sección de importación, se deben configurar las siguientes propiedades
 
 ```html
     registerFields:[
-    {
-    name://nombre del campo que se desea guardar
-    displayValue: //valor que se expone en la pantalla
-    }
+    	{
+    		name://nombre del campo que se desea guardar
+    		displayValue: //valor que se expone en la pantalla
+    	}
     ]
 ```  
     
@@ -457,7 +457,7 @@ La propiedad deberá incluir el servicio que se consumirá para la subida masiva
 ```html 
     /**
      * uploadFunction() en esta función se realizará la subida masiva,
-     * la lógica del consumo del servicio y los datos del resumen se debe desarrollar en esta funciónm
+     * la lógica del consumo del servicio y los datos del resumen se debe desarrollar en esta función
      */
     uploadFunction(array){
         this.progressBarValue = 0    
@@ -525,10 +525,10 @@ En este ejemplo se asignaron sólo dos campos, clic en importar
 ```html 
           this.colum = [
               {
-	   name://nombre del atributo
-	   label: //cabecera que se mostrará en la tabla 
-               find:1, //Para activar la cabecera de búsqueda 1:true/ 2:false
-               sort:1  //Para activar la opción de ordenar los registros 1:true/ 2:false
+	   		name://nombre del atributo
+	   		label: //cabecera que se mostrará en la tabla 
+               		find:1, //Para activar la cabecera de búsqueda 1:true/ 2:false
+               		sort:1  //Para activar la opción de ordenar los registros 1:true/ 2:false
               },
           ]
 ```
@@ -536,7 +536,7 @@ En este ejemplo se asignaron sólo dos campos, clic en importar
 * Paso 2: Configurar el formato de los objetos que se mostrarán en la tabla. Para esto, se debe setear la propiedad setDataTable con una función con la siguiente estructura:
 ```html 
         /**
-*  La función setDataTable() es la encargada de darle el formato necesario al arreglo obtenido de la búsqueda
+	*  La función setDataTable() es la encargada de darle el formato necesario al arreglo obtenido de la búsqueda
         *  el formato es definido por el programador
         *  se envía al componente <MasterTemplate> en la propiedad setDataTable
         *  */ 
