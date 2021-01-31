@@ -14,8 +14,23 @@
                 <div id="collapseTag" class="card-collapse collapse in">
                     <div class="card-body">                      
                        <div class="card-body" style="padding-bottom:5px; padding-top: 10px;">
+                         
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="flagListFilters == true"  >                             
+                              <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
+                              <div class="form-group" style="margin-top: 10px;">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <treeselect v-model="arrayAddedFilters"
+                                  :value-consists-of="valueConsistsOf"
+                                  :multiple="true"
+                                  :options="optionsFilters" />
+                                </div>
+                                <button type="button" @click="addFilter()" class="btn btn-success btn-xs float-right" style="margin-top: 5px;">Actualizar filtros</button> 
+                              </div>                              
+                          </div>  
+
                           <MasterAdministrator
-                            :filters="filters"          
+                            :filters="filtersMasterAdministrator"          
                             :buttonFilter="buttonFilter"                           
                             ref ="masterAdministartor"
                           ></MasterAdministrator>
@@ -25,8 +40,7 @@
                          <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>                          
                        </div>
                     </div>
-                </div>
-      
+                </div>      
     </div>
 
     <div v-if="flagUploadData == true" class="card-header-actions">
@@ -227,6 +241,7 @@
 //import consultServices from './../../utilities/consultServices.js';
 import LoadingComponent from "./loadingComponentContainer.vue";
 import MasterAdministrator from "./masterAdministratorContainer.vue";
+import listComponent from "./listComponentContainer.vue";
 import TableMaf from "../tableMaf.vue";
 import Treeselect from '@riophae/vue-treeselect';
 import vueStep from 'vue-step';
@@ -241,6 +256,9 @@ export default {
     Treeselect,
     LoadingComponent,
     vueStep,
+    listComponent,
+    Treeselect,
+    
   },
 
   props:{
@@ -260,6 +278,7 @@ export default {
     uploadFunction: Function,
     showSearchSection: Boolean,    
     tableSearch: Boolean,
+    flagListFilters: Boolean,
     loadingComponentLabel: String,
     loadingComponentClass: String,
     //setContent: Function,
@@ -271,7 +290,7 @@ export default {
       //declarar variable que se va utilizar
       valueConsistsOf: 'ALL_WITH_INDETERMINATE',
       isLoading: false,  
-      arrayOptions:[],
+      //arrayOptions:[],
       valueTest:null,
       headingTitleFinal:'',
       nowStep: 1,
@@ -289,12 +308,15 @@ export default {
       newCSV:false,
       fileName : '',
       showDetailStep4:false,
-
+      //
+      auxFilters:[],
+      optionsFilters:[],
+      filtersMasterAdministrator: [],
+      arrayAddedFilters: [],
   }),
 
 
-  created () {
-    this.arrayOptions = this.tranforForSelectTree(this.filters) 
+  async created () {
     this.headingTitle? this.headingTitleFinal = this.headingTitle : this.headingTitleFinal = 'Búsqueda'
     $(document).ready(function(){
         $(".show-modal").click(function(){
@@ -303,21 +325,33 @@ export default {
                 keyboard: false
             });
         });
-    });  
+    });
+    this.auxFilters = this.filters
+    this.filtersMasterAdministrator =  _.cloneDeep(this.filters)
+    if(this.flagListFilters == true){
+      await this.refreshContentListFilters()
+    }
+    //await this.refreshFilters(this.auxFilters)
   },
   methods: {
 
-    tranforForSelectTree(filters) {
-      return _.map(filters,(item)=>{
-        var response = {
-          id: item.name,
-          label: item.label,
-          }
-        return response;
-      })
-    },
+
     setContentListComponent(array, name){
       this.$refs.masterAdministartor.setContentListComponent(array, name);        
+    },
+    async refreshFilters(array){
+        this.filtersMasterAdministrator = array
+    },
+    async refreshContentListFilters(){
+      this.optionsFilters = []
+      for (let index = 0; index < this.filters.length; index++) {
+        if(this.filters[index].isRequired ==  false && this.filters[index].selectField == false ){
+            var obj={}
+            obj.id = this.auxFilters[index].name
+            obj.label = this.auxFilters[index].label
+            this.optionsFilters.push(obj)
+        }             
+      }
     },
     clearSearch( ){
       console.log('filtros para revisar ', this.filters)
@@ -351,6 +385,30 @@ export default {
 
 
     },
+    async addFilter(){
+      this.isLoading = true
+      console.log('arreglo de filtros', this.arrayAddedFilters)
+      if(this.arrayAddedFilters.length == 0){
+        this.filtersMasterAdministrator  = _.cloneDeep(this.filters)
+      }
+      else{
+        this.auxFilters = []
+        var newArray = _.cloneDeep(this.filters)
+        for (let index = 0; index < this.arrayAddedFilters.length; index++) {
+            for (let j = 0; j < newArray.length; j++) {
+              if(newArray[j].name == this.arrayAddedFilters[index]){
+                newArray[j].selectField = true
+              }                
+            }        
+        }
+        this.auxFilters =  newArray
+        this.filtersMasterAdministrator = this.auxFilters
+        //await this.refreshFilters(this.auxFilters)
+      }
+      
+      await this.refreshContentListFilters()
+      this.isLoading = false
+    },
     /**
      * El método runSearch() permite darle el formato necesario a los filtros
      * para despues usar la propiedad del componente dataLoadFunction() y obtener 
@@ -373,25 +431,22 @@ export default {
         var finalArray=[]
         var selectedFilters=[]
         var startSearch=true
-        console.log('check filteeeeers ', this.filters)
+        console.log('check filteeeeers ', this.filtersMasterAdministrator)
         //Dar formato a los filtros generando objetos con los siguientes atributos: name, value, operator
-        for (let index = 0; index <  this.filters.length; index++) {
+        for (let index = 0; index <  this.filtersMasterAdministrator.length; index++) {
             
-            if(this.filters[index].isRequired == true && this.filters[index].vModel == undefined ){
+            if(this.filtersMasterAdministrator[index].isRequired == true && this.filtersMasterAdministrator[index].vModel == undefined ){
                 startSearch =false
             }else{
               var filter={}
-                if(this.filters[index].selectField == true){
-                    filter.name = this.filters[index].name
-                    if( this.filters[index].vModel){
-                      filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
-                      filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'  
-                      this.filters[index].filterType == 'inputComponent'? filter.type = this.filters[index].type : filter.type = null
+                if(this.filtersMasterAdministrator[index].selectField == true){
+                    filter.name = this.filtersMasterAdministrator[index].name
+                    if( this.filtersMasterAdministrator[index].vModel){
+                      filter.value = this.filtersMasterAdministrator[index].operators == true ? filter.value = this.filtersMasterAdministrator[index].vModel.variable : this.filtersMasterAdministrator[index].vModel
+                      filter.operator = this.filtersMasterAdministrator[index].operators == true ? filter.operator = this.filtersMasterAdministrator[index].vModel.operator : filter.operator='F'  
+                      this.filtersMasterAdministrator[index].filterType == 'inputComponent'? filter.type = this.filtersMasterAdministrator[index].type : filter.type = null
                       selectedFilters.push(filter)
-                    }
-                    // filter.value = this.filters[index].operators == true ? filter.value = this.filters[index].vModel.variable : this.filters[index].vModel
-                    // filter.operator = this.filters[index].operators == true ? filter.operator = this.filters[index].vModel.operator : filter.operator='F'                    
-                   
+                    }         
                 }  
             }          
         }
@@ -411,7 +466,6 @@ export default {
         else{
           alert('Debe completar los campos obligatorios(*) para inciar la búsqueda')
         }
-        //this.filters =[]
         this.isLoading = false;
     },
 
@@ -617,6 +671,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .collapsing {
   -webkit-transition-delay: 0.2s;
