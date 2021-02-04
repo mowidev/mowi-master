@@ -15,30 +15,61 @@
                     <div class="card-body">                      
                        <div class="card-body" style="padding-bottom:5px; padding-top: 10px;">
                          
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="flagSearchHistory == true"  >                             
+                              <h3 style="padding-top: 10px;">Búsquedas guardadas </h3>
+                              <div class="form-group" style="margin-top: 10px;">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un arreglo de filtros:</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <select class="form-control col-md-12 col-sm-12 col-xs-12" v-model="selectedArray" @change="useSearch()" >
+                                    <option value="NEW">Nueva búsqueda</option>
+                                    <option v-for="value in searchHistory" :value="value"  >{{value.label}}</option>
+                                  </select>
+                                </div>                               
+                              </div>                              
+                          </div>     
+
                           <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="flagListFilters == true"  >                             
                               <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
                               <div class="form-group" style="margin-top: 10px;">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                  <treeselect v-model="arrayAddedFilters"
+                                  <treeselect v-model="arrayAddedFilters"                                
                                   :value-consists-of="valueConsistsOf"
                                   :multiple="true"
                                   :options="optionsFilters" />
-                                </div>
-                                <button type="button" @click="addFilter()" class="btn btn-success btn-xs float-right" style="margin-top: 5px;">Actualizar filtros</button> 
-                              </div>                              
+                                </div> 
+                                <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Agregar</button>                               
+                              </div>                                                            
                           </div>  
 
-                          <MasterAdministrator
-                            :filters="filtersMasterAdministrator"          
-                            :buttonFilter="buttonFilter"                           
-                            ref ="masterAdministartor"
-                          ></MasterAdministrator>
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" >
+                            
+                            <div class="form-group" style="margin-top: 20px; margin-bottom: 30px;">
+                                <h3 class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de la búsqueda:</h3>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text"  v-if="showEditTitleSearch == true"  v-model="titleSearch"  class="form-control col-md-12 col-xs-12" >
+                                    <input type="text"  v-if="showEditTitleSearch == false" v-model="titleSearch"  class="form-control col-md-12 col-xs-12" readonly>
+                                </div>
+                                <a @click="editTitleSearch()" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+                            </div>
+                            
+
+                            <MasterAdministrator
+                              :filters="filtersMasterAdministrator"          
+                              :buttonFilter="buttonFilter"                           
+                              ref ="masterAdministartor"
+                            ></MasterAdministrator>
+
+                            <div class="card-body">
+                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
+                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>        
+                              <button v-if="flagSaveSearch == true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
+                            </div>
+                           
+                          </div> 
+
                        </div>
-                       <div class="card-body">
-                         <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
-                         <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>                          
-                       </div>
+
                     </div>
                 </div>      
     </div>
@@ -279,6 +310,8 @@ export default {
     showSearchSection: Boolean,    
     tableSearch: Boolean,
     flagListFilters: Boolean,
+    flagSearchHistory: Boolean,
+    searchHistory: Array,
     loadingComponentLabel: String,
     loadingComponentClass: String,
     //setContent: Function,
@@ -290,7 +323,6 @@ export default {
       //declarar variable que se va utilizar
       valueConsistsOf: 'ALL_WITH_INDETERMINATE',
       isLoading: false,  
-      //arrayOptions:[],
       valueTest:null,
       headingTitleFinal:'',
       nowStep: 1,
@@ -300,7 +332,6 @@ export default {
       dataCSV:[],
       dataForMapping:[],
       //varible de porcentaje para el paso 3 
-      //dataPercentSent: 22,
       dataPercentSent : 0,
       selectedField:'',
       //boleeanos para mostrar pasos
@@ -313,6 +344,10 @@ export default {
       optionsFilters:[],
       filtersMasterAdministrator: [],
       arrayAddedFilters: [],
+      selectedArray: 'NEW',
+      flagSaveSearch: true, 
+      titleSearch: 'Nueva Búsqueda',
+      showEditTitleSearch: false,
   }),
 
 
@@ -326,12 +361,11 @@ export default {
             });
         });
     });
-    this.auxFilters = this.filters
+
     this.filtersMasterAdministrator =  _.cloneDeep(this.filters)
     if(this.flagListFilters == true){
-      await this.refreshContentListFilters()
+      await this.refreshContentListFilters('NEW')
     }
-    //await this.refreshFilters(this.auxFilters)
   },
   methods: {
 
@@ -342,15 +376,26 @@ export default {
     async refreshFilters(array){
         this.filtersMasterAdministrator = array
     },
-    async refreshContentListFilters(){
-      this.optionsFilters = []
-      for (let index = 0; index < this.filters.length; index++) {
-        if(this.filters[index].isRequired ==  false && this.filters[index].selectField == false ){
-            var obj={}
-            obj.id = this.auxFilters[index].name
-            obj.label = this.auxFilters[index].label
-            this.optionsFilters.push(obj)
-        }             
+    async refreshContentListFilters(type){
+
+      this.arrayAddedFilters =[]
+      if(type == 'NEW'){
+        this.optionsFilters = []
+        for (let index = 0; index < this.filters.length; index++) {
+              var obj={}
+              obj.id = this.filters[index].name
+              obj.label = this.filters[index].label
+
+              if(this.filters[index].selectField ==  true){
+                this.arrayAddedFilters.push(this.filters[index].name)
+                if(this.filters[index].isRequired ==  true){
+                  obj.isDisabled = true  
+                }
+              }                
+              
+              this.optionsFilters.push(obj)     
+              this.selectedArray = "NEW"     
+        }
       }
     },
     clearSearch( ){
@@ -385,28 +430,113 @@ export default {
 
 
     },
+    saveSearch(){
+
+      var arrayHistory = []
+      //Obetener los nombres de los filtros seleccionados
+      for (let index = 0; index < this.filtersMasterAdministrator.length; index++) {
+        if(this.filtersMasterAdministrator[index].selectField == true){
+            arrayHistory.push(this.filtersMasterAdministrator[index].name)
+        }        
+      }
+
+      console.log('arrayHistory', arrayHistory)
+      if(this.selectedArray == 'NEW'){
+        //Si es una nueva búsuqeda, guardar
+        var newSearch = {}
+        newSearch.label = this.titleSearch
+        newSearch.arrayInputs = arrayHistory
+        this.searchHistory.push(newSearch)
+      }else{
+        //Si es una búsqueda anterior, reemplazar 
+        for (let k = 0; k < this.searchHistory.length; k++) {
+          if(this.searchHistory[k].label == this.selectedArray.label){
+            this.searchHistory[k].arrayInputs = arrayHistory
+            this.searchHistory[k].label = this.titleSearch
+          }        
+        }
+      }
+
+    },
+
+    async useSearch(){
+        console.log('selectedArray', this.selectedArray)
+        var SelectedOption = _.cloneDeep(this.selectedArray)
+        this.arrayAddedFilters = [] 
+        var newArray = _.cloneDeep(this.filters)
+        var finalArray = [] 
+        this.showEditTitleSearch = false
+
+        //NUEVA BÚSQUEDA
+        if(SelectedOption == 'NEW'){
+          console.log('entró a new')   
+          //Asignar título       
+          this.titleSearch = 'Nueva búsqueda'
+          //Poblar sección 2 
+          for (let k = 0; k < newArray.length; k++) {
+           if(newArray[k].selectField == true ){
+             this.arrayAddedFilters.push(newArray[k].name)
+           }            
+          }
+          //Poblar sección 3
+          this.filtersMasterAdministrator = _.cloneDeep(this.filters)
+        }
+
+        //HISTORIAL
+        else{
+          console.log('entró a useSearch')
+          //Asignar título    
+          this.titleSearch = SelectedOption.label
+          //Poblar sección 2
+          this.arrayAddedFilters = []
+          var selected = SelectedOption.arrayInputs
+          console.log('selected', selected)
+          for (let i = 0; i < newArray.length; i++) {
+            for (let j = 0; j < selected.length; j++) {
+              if(selected[j] == newArray[i].name){
+                // var obj ={}
+                // obj.name = newArray[i].name
+                // obj.label = newArray[i].label
+                this.arrayAddedFilters.push(newArray[i].name)
+              }
+            }
+          } 
+          console.log('arrayAddedFilters', this.arrayAddedFilters)
+          //Poblar sección 3
+          for (let i = 0; i < newArray.length; i++) {
+            for (let j = 0; j < SelectedOption.arrayInputs.length; j++) {
+              if(SelectedOption.arrayInputs[j] == newArray[i].name){
+                  var obj = newArray[i]
+                  obj.selectField = true
+                  finalArray.push(obj)
+              }
+            }
+          }   
+          this.filtersMasterAdministrator = finalArray       
+        }
+        
+    },
     async addFilter(){
       this.isLoading = true
-      console.log('arreglo de filtros', this.arrayAddedFilters)
+      console.log('arreglo de filtros en addfilter', this.arrayAddedFilters)
       if(this.arrayAddedFilters.length == 0){
+        console.log('filter.length 0' )
         this.filtersMasterAdministrator  = _.cloneDeep(this.filters)
       }
       else{
         this.auxFilters = []
-        var newArray = _.cloneDeep(this.filters)
+        var newArray = _.cloneDeep(this.filters)        
         for (let index = 0; index < this.arrayAddedFilters.length; index++) {
             for (let j = 0; j < newArray.length; j++) {
               if(newArray[j].name == this.arrayAddedFilters[index]){
-                newArray[j].selectField = true
+                var obj = newArray[j]
+                obj.selectField = true
+                this.auxFilters.push(obj)
               }                
             }        
         }
-        this.auxFilters =  newArray
         this.filtersMasterAdministrator = this.auxFilters
-        //await this.refreshFilters(this.auxFilters)
       }
-      
-      await this.refreshContentListFilters()
       this.isLoading = false
     },
     /**
@@ -471,6 +601,10 @@ export default {
 
     async setInitialData(data){
        this.$refs.tableMaf.formatData(this.setDataTable(data));
+    },
+
+    editTitleSearch(){
+      this.showEditTitleSearch = true
     },
 
     /**Sección subida masiva de data
