@@ -15,7 +15,7 @@
                     <div class="card-body">                      
                        <div class="card-body" style="padding-bottom:5px; padding-top: 10px;">
                          
-                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="flagSearchHistory == true"  >                             
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="_flagSearchHistory == true"  >                             
                               <h3 style="padding-top: 10px;">Búsquedas guardadas </h3>
                               <div class="form-group" style="margin-top: 10px;">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un arreglo de filtros:</label>
@@ -28,7 +28,7 @@
                               </div>                              
                           </div>     
 
-                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="flagListFilters == true"  >                             
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="_flagListFilters == true"  >                             
                               <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
                               <div class="form-group" style="margin-top: 10px;">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
@@ -38,13 +38,13 @@
                                   :multiple="true"
                                   :options="optionsFilters" />
                                 </div> 
-                                <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Agregar</button>                               
+                                <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Actualizar filtros</button>                               
                               </div>                                                            
                           </div>  
 
                           <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" >
                             
-                            <div class="form-group" style="margin-top: 20px; margin-bottom: 30px;">
+                            <div class="form-group" style="margin-top: 20px; margin-bottom: 30px;" v-if="_flagSearchHistory ==true">
                                 <h3 class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de la búsqueda:</h3>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text"  v-if="showEditTitleSearch == true"  v-model="titleSearch"  class="form-control col-md-12 col-xs-12" >
@@ -63,7 +63,7 @@
                             <div class="card-body">
                               <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
                               <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>        
-                              <button v-if="flagSaveSearch == true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
+                              <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
                             </div>
                            
                           </div> 
@@ -314,7 +314,6 @@ export default {
     searchHistory: Array,
     loadingComponentLabel: String,
     loadingComponentClass: String,
-    //setContent: Function,
   },
 
 
@@ -348,11 +347,15 @@ export default {
       flagSaveSearch: true, 
       titleSearch: 'Nueva Búsqueda',
       showEditTitleSearch: false,
+      _flagListFilters: false,
+      _flagSearchHistory: false,     
   }),
 
 
   async created () {
     this.headingTitle? this.headingTitleFinal = this.headingTitle : this.headingTitleFinal = 'Búsqueda'
+    this.flagListFilters ? this._flagListFilters = this.flagListFilters :  this._flagListFilters = false
+    this.flagSearchHistory ? this._flagSearchHistory = this.flagSearchHistory :  this._flagSearchHistory = false
     $(document).ready(function(){
         $(".show-modal").click(function(){
             $("#myModal").modal({
@@ -361,7 +364,6 @@ export default {
             });
         });
     });
-
     this.filtersMasterAdministrator =  _.cloneDeep(this.filters)
     if(this.flagListFilters == true){
       await this.refreshContentListFilters('NEW')
