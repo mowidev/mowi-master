@@ -1,7 +1,7 @@
 <template>
   <div> 
     <!--se renderizan los campos para la búsqueda -->
-    <div v-for="(item, i) in filters" :key="`A-${i}`">
+    <div v-for="(item, i) in filters" :key="`A-${item.name}`">
       <div  style="margin-top: 10px;" v-if="item.filterType == 'dateComponent' && item.selectField == true">
          <dateComponent :label="item.label" :isRequired="item.isRequired" :dateRange="item.dateRange"  :styles="item.styles" :mode="item.mode" v-model="item.vModel" :isVisible="item.isVisible" :selectDate="item.selectedDate" :ref="item.name" />      
       </div>
@@ -39,7 +39,6 @@ export default {
   },
   props: ["filters","customActions"],
   created () {
-
   },
   methods: {
     async setContentListComponent(data, nameRef){
