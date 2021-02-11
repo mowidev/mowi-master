@@ -4,7 +4,7 @@
 Component developed for search
 Propiedad | Detalle
 ------------ | -------------
-Versión | 2.2.2
+Versión | 2.2.3
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
@@ -20,6 +20,9 @@ Descripción | Componente desarrollado para implementar propiedades CRUD de una 
 Propiedad | Tipo | Descripción | Subpropiedades
 ------------ | ------------- | ------------ | -------------
 filters | Array | Arreglo donde se define los filtros para la búsqueda de registros | Si
+searchHistory | Array | Arreglo donde se define los arreglo de búsqueda | si
+flagListFilters | Boolean | Booleano que define si el buscador permitirá filtros dinámicos| No
+flagSearchHistory | Boolean | Booleano que define si el buscador tendrá historial de búsqueda| No
 setDataTable | Function |Brinda el formato definido por el programador para la tabla de resultados del componente. | No
 dataLoadFunction | Function | Función donde se encuentra la lógica de búsqueda establecida por el programador. | No
 header | Array | Arreglo donde se define la cabecera de la tabla del componente. |No
@@ -410,6 +413,37 @@ Los filtros del tipo inputComponent soportan el uso de componentes, la siguiente
   * {label:'Termina con', value:'like%'} 
   * {label:'Vacío',value:'null' }
 
+**4.1.2 Historial de búsqueda**
+
+El buscador permite a programador incluir listas de filtros predefinidos, como historiales de búsqueda. Estos arreglos de filtros pueden editarse y guardarse en los historiales de búsqueda. Para utilizar historiales de búsqueda, en el componente mowi-master configurar las siguientes propiedades 
+
+```html    
+    <masterTemplate
+          :searchHistory= "this.propsTemplateManangerOrder.searchHistory"
+          :flagSearchHistory= "this.flagSearchHistory" //True para mostrar el historial de búsquedas
+		
+``` 
+
+Los atributos del arreglo deben tener la siguiente estructura
+
+```html    
+	searchHistory:[
+	      {
+		label: "Búsqueda base",
+		arrayInputs: ["title","size"]
+	      }
+	    ],
+``` 
+
+
+**4.1.3 Filtros dinámicos de búsqueda**
+
+El buscador permite al usuario incluir filtros dinámicos en la búsqueda. Para utilizar los filstros dinámicos, en el componente mowi-master configurar las siguientes propiedades 
+
+```html    
+	<masterTemplate
+          :flagListFilters= "this.flagListFilters"
+``` 
 
 
 
