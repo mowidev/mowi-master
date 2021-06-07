@@ -33,7 +33,7 @@
                                 <thead>
                                 <tr>
                                     <th v-for="head in header">
-                                        <div :class="classTable.classForHeader"  >
+                                        <div :class="head.classForHeader"  >
                                             <label>{{head.label}}  </label>
                                             <div v-if="showSort == true" style="
                                                 width: 30px;
@@ -56,10 +56,10 @@
                                         </td>
                                     </tr>
                                     <tr v-for="object in paginated('dataTable')" v-bind:key="object.indexTableMaf" >
-                                        <td v-for="head in header">
-                                            <div :class="classTable.classForCell"  >
-                                                <Value :data='object[head.name]'></Value>
-                                            </div>
+                                        <td v-for="head in header" :class="head.classForCell">  
+                                                                                     
+                                                <Value :data='object[head.name]'></Value>      
+                                                                          
                                         </td>
                                     </tr>
                                 </paginate>
@@ -106,7 +106,7 @@
     export default {
 
         props: ['header','data','tableTitle','searchOption','text','callbackData','title','datePerPageV','pagination',
-        'useMassiveSelector','numberRecord', 'flagSort', 'tableClass'],
+        'useMassiveSelector','numberRecord', 'flagSort'],
          components: {
           Value,
         },
@@ -125,10 +125,6 @@
           useMassiveSelectorFlag:false,
           massiveSelect:false,
           showSort: false,
-          classTable:{
-              classForHeader:'d-flex justify-content-around',
-              classForCell: 'd-flex justify-content-around'
-          }
         }),
          created () {
              if(this.useMassiveSelector){this.useMassiveSelectorFlag=this.useMassiveSelector}
@@ -143,7 +139,6 @@
              if(this.datePerPageV == false){this.datePerPageView=false}
              if(this.pagination == false){this.paginationView=false}
              if(this.numberRecord ){this.datePerPage=this.numberRecord}
-             if(this.tableClass){this.classTable=this.tableClass}
              if(this.flagSort ){this.showSort=this.flagSort}
              if(this.text != ''){this.textView=true}
              

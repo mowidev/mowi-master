@@ -102,7 +102,6 @@
     :datePerPageV="propsTable.showDatePerPageView"
     :numberRecord="propsTable.nRecord"
     :flagSort="propsTable.flagSort"
-    :tableClass="propsTable.classTable"
     ></TableMaf>
   
     <!-- Modal subida de archivos .CSV -->

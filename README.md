@@ -4,7 +4,7 @@
 Component developed for search
 Propiedad | Detalle
 ------------ | -------------
-Versión | 2.2.3
+Versión | 2.2.6
 Install | npm i mowi-master
 Descripción | Componente desarrollado para implementar propiedades CRUD de una entidad, incluye buscador con filtros, incluye función para importar registros desde un archivo .csv
 
