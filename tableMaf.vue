@@ -33,9 +33,9 @@
                                 <thead>
                                 <tr>
                                     <th v-for="head in header">
-                                        <div class="d-flex justify-content-between">
+                                        <div :class="classTable.classForHeader"  >
                                             <label>{{head.label}}  </label>
-                                            <div style="
+                                            <div v-if="showSort == true" style="
                                                 width: 30px;
                                                 min-width: 30px;
                                                 margin-left: 15px;
@@ -48,17 +48,19 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <paginate name="dataTable" :list="filtered" :per="datePerPage" tag="tbody" ref="paginator" >
-                                    <tr v-if="filterView != false" >
-                                        <td v-for="(filter,index) in filSearch" :key="index" class="table-success" >
-                                            
+                                <paginate name="dataTable" :list="this.filtered" :per="datePerPage" tag="tbody" ref="paginator" >
+                                    <tr v-if="searchOption" >
+                                        <td v-for="filter in header" class="table-success" >
                                             <input v-if="filter.find==1" type="text" v-model="filter.value" class="form-control" :placeholder="filter.label">
                                             <label v-if="filter.find==0"> </label>
                                         </td>
                                     </tr>
                                     <tr v-for="object in paginated('dataTable')" v-bind:key="object.indexTableMaf" >
-                                        <td v-for="(head, index) in header" :key="index" >
-                                        <Value :data='object[head.name]'></Value></td>
+                                        <td v-for="head in header">
+                                            <div :class="classTable.classForCell"  >
+                                                <Value :data='object[head.name]'></Value>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </paginate>
                                 
@@ -103,7 +105,8 @@
 
     export default {
 
-        props: ['header','data','tableTitle','searchOption','text','callbackData','title','datePerPageV','pagination','useMassiveSelector'],
+        props: ['header','data','tableTitle','searchOption','text','callbackData','title','datePerPageV','pagination',
+        'useMassiveSelector','numberRecord', 'flagSort', 'tableClass'],
          components: {
           Value,
         },
@@ -111,19 +114,21 @@
           allSelected:false,
           isLoading:false,
           idEvaluated:'',
-          filSearch:{},
           datePerPage:10,
           paginate: ['dataTable'],
           dataTable:[],
           valPage:[5,10,25,50,100],
-          filterView:true,
           textView:false,
           titleView:true,
           datePerPageView:true,
           paginationView:true,
           useMassiveSelectorFlag:false,
-          massiveSelect:false
-
+          massiveSelect:false,
+          showSort: false,
+          classTable:{
+              classForHeader:'d-flex justify-content-around',
+              classForCell: 'd-flex justify-content-around'
+          }
         }),
          created () {
              if(this.useMassiveSelector){this.useMassiveSelectorFlag=this.useMassiveSelector}
@@ -133,13 +138,13 @@
                 //this.header.push({ label: "Seleccionar todo", name: "select", find: 0, sort: 0 },)
              }
              
-             console.log('valor inicial para la cabecera ', this.massiveSelect)
-             this.search();
              this.formatData(this.data);
              if(this.title == false){this.titleView=false}
              if(this.datePerPageV == false){this.datePerPageView=false}
              if(this.pagination == false){this.paginationView=false}
-             if(this.searchOption == false){this.filterView=false}
+             if(this.numberRecord ){this.datePerPage=this.numberRecord}
+             if(this.tableClass){this.classTable=this.tableClass}
+             if(this.flagSort ){this.showSort=this.flagSort}
              if(this.text != ''){this.textView=true}
              
 
@@ -147,21 +152,12 @@
         methods: {
             check_(e){
                 
-                if(e.target.checked == true)
-                {    
-                       for(let data of this.dataTable) 
-                       {
-                        
-                           let d = this.hasChildElement(data.actionsCheck)
-                              console.log("data",d)
-                       }
+                if(e.target.checked == true){    
+                    for(let data of this.dataTable) {
+                        let d = this.hasChildElement(data.actionsCheck)
+                            console.log("data",d)
+                    }
                 }
-            },
-            search(){
-                this.filterView = this.searchOption;
-                this.filSearch = _.map(this.header, (object) => {
-                        return object;
-                });
             },
 
            formatData(data){
@@ -226,11 +222,10 @@
 
         },
         computed:{
-
             filtered () {
-
+                console.log('Aplicaré filtro')
                 var filteredData=this.dataTable;
-                this.filSearch.forEach(element => {
+                this.header.forEach(element => {
                     filteredData = element.value ?
                     _.filter(filteredData, object =>{
                         var dataValue = _.toUpper(object[element.name]);
