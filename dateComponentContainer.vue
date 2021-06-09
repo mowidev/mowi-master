@@ -3,7 +3,7 @@
       <label :class="_styles.label">{{_label}}</label>
       <div :class="_styles.container">
           <v-date-picker format="dd/MM/yyyy" :mode="_mode" :value="_dateRange" v-model="variable"
-          v-on:input="returnData" :columns="$screens({ default: 1, laptop: 2 })"></v-date-picker>
+          v-on:input="returnData" ></v-date-picker>
       </div>
   </div>     
 </template>
