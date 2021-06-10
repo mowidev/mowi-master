@@ -27,8 +27,8 @@
                                 </div>                               
                               </div>                              
                           </div>      -->
-
-                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="_flagListFilters == true"  >                             
+                          <div v-if="_flagListFilters == true" >
+                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;"  >                             
                               <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
                               <div class="form-group" style="margin-top: 10px;">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
@@ -40,8 +40,7 @@
                                 </div> 
                                 <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Actualizar filtros</button>                               
                               </div>                                                            
-                          </div>  
-
+                          </div>
                           <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" >
                             <div class="card-header" style="padding-left: 15px; margin: 0px -5px 0px -5px; " aria-expanded="false" >
                               <div class="clearfix">
@@ -81,6 +80,20 @@
                               <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
                             </div>
                            
+                          </div> 
+                          </div>
+
+                          <div v-else class="card-body" style="margin-bottom: 20px;" >                          
+                            <MasterAdministrator
+                              :filters="filtersMasterAdministrator"          
+                              :buttonFilter="buttonFilter"                           
+                              ref ="masterAdministartor"
+                            ></MasterAdministrator>
+                            <div class="card-body">
+                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
+                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>        
+                              <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
+                            </div>                           
                           </div> 
 
                        </div>
