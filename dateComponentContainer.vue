@@ -2,18 +2,35 @@
   <div v-if="_isVisible  == true" :class="_styles.formGroup">
       <label :class="_styles.label">{{_label}}</label>
       <div :class="_styles.container">
-          <v-date-picker format="dd/MM/yyyy" :mode="_mode" :value="_dateRange" v-model="variable"
-          v-on:input="returnData" ></v-date-picker>
+          <!-- <v-date-picker 
+          :mode="_mode" :value="_dateRange" v-model="variable"
+          v-on:input="returnData" 
+          format="MMMM-yyyy" value-format="MM-yyyy" type="month"
+          ></v-date-picker> -->
+          <Datepicker 
+            :value="_dateRange"
+            :mode="'range'"
+            v-model="variable"
+            :format="'MMMM-yyyy'"
+            minimum-view="month"
+            maximum-view="year"
+            name="datepicker"
+            input-class="input-class">
+          </Datepicker>
+
       </div>
   </div>     
 </template>
     
 <script>
 import moment from "moment";
+import Datepicker from 'vuejs-datepicker';
 
 export default {
   name: "dateComponent",
- 
+  components: {
+    Datepicker,
+  }, 
 
   props:['label','dateRange','styles','mode','isVisible','isRequired']  ,
   data: () => ({

@@ -75,8 +75,8 @@
                             ></MasterAdministrator>
 
                             <div class="card-body">
-                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
-                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>        
+                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">{{htmllabelSearchButton}}</button> 
+                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">{{htmllabelCleanButton}}</button>        
                               <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
                             </div>
                            
@@ -90,8 +90,8 @@
                               ref ="masterAdministartor"
                             ></MasterAdministrator>
                             <div class="card-body">
-                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">Buscar</button> 
-                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">Limpiar campos</button>        
+                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">{{htmllabelSearchButton}}</button> 
+                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">{{htmllabelCleanButton}}</button>        
                               <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
                             </div>                           
                           </div> 
@@ -380,14 +380,23 @@ export default {
       titleSearch: 'Nueva Búsqueda',
       showEditTitleSearch: false,
       _flagListFilters: false,
-      _flagSearchHistory: false,     
+      _flagSearchHistory: false,   
+      //Variables para editar botones del buscador
+      htmllabelSearchButton: "Buscar default",
+      htmllabelCleanButton: 'Limpiar default',
+      _flagCleanAndSearch: true,        
   }),
 
 
   async created () {
+    console.log('this propstable::::::::::::::::::::::', this.propsTable)
     this.headingTitle? this.headingTitleFinal = this.headingTitle : this.headingTitleFinal = 'Buscador'
     this.flagListFilters ? this._flagListFilters = this.flagListFilters :  this._flagListFilters = false
     this.flagSearchHistory ? this._flagSearchHistory = this.flagSearchHistory :  this._flagSearchHistory = false
+    this.propsTable.labelSearchButton != null && this.propsTable.labelSearchButton != '' ? this.htmllabelSearchButton = this.propsTable.labelSearchButton : null
+    this.propsTable.labelCleanButton != null && this.propsTable.labelCleanButton != '' ? this.htmllabelCleanButton = this.propsTable.labelCleanButton : null
+    this.propsTable.flagCleanAndSearch != null && this.propsTable.flagCleanAndSearch != '' ? this._flagCleanAndSearch = this.propsTable.flagCleanAndSearch : null
+
     $(document).ready(function(){
         $(".show-modal").click(function(){
             $("#myModal").modal({
@@ -432,7 +441,7 @@ export default {
         }
       }
     },
-    clearSearch( ){
+    async clearSearch( ){
       console.log('filtros para revisar ', this.filters)
       for (let index = 0; index < this.filters.length; index++) {
         // if(this.filters[index].filterType == 'inputComponent' && this.filters[index].vModel ){
@@ -440,6 +449,15 @@ export default {
         // }
         //if(this.filters[index].filterType != 'inputComponent' ){
           this.$refs.masterAdministartor.clearValue(this.filters[index].name);
+          if(this._flagCleanAndSearch == true){
+            var filters= null
+            var arrayData =await this.dataLoadFunction(filters)
+            //dar el formato a los datos
+            var finalArray=this.setDataTable(arrayData)            
+            //refrescar la tabla
+            this.$refs.tableMaf.formatData(finalArray); 
+          }   
+
         //}
              
       }
