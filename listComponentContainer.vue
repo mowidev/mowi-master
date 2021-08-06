@@ -1,5 +1,5 @@
 <template>
-  <div v-if="_isVisible  == true" :class="_styles.formGroup">
+  <div v-if="_isVisible  == true" :class="_styles.formGroup" class="mowi-master-item-search">
       <label :class="_styles.label">{{_label}}</label>
       <div :class="_styles.container">
           <treeselect v-model="valueTest" v-on:input="returnData" :value-consists-of="valueConsistsOf"

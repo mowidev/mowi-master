@@ -12,8 +12,8 @@
                    </div>
                 </div>
                 <div id="collapseTag" class="card-collapse collapse in">
-                    <div class="card-body">                      
-                       <div class="card-body" style="padding-bottom:5px; padding-top: 10px;">
+                                 
+                       <div class="mowi-master-search-body " >
                          
                           <!-- <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" v-if="_flagSearchHistory == true"  >                             
                               <h3 style="padding-top: 10px;">Búsquedas guardadas </h3>
@@ -27,78 +27,80 @@
                                 </div>                               
                               </div>                              
                           </div>      -->
-                          <div v-if="_flagListFilters == true" >
-                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;"  >                             
-                              <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
-                              <div class="form-group" style="margin-top: 10px;">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                  <treeselect v-model="arrayAddedFilters"                                
-                                  :value-consists-of="valueConsistsOf"
-                                  :multiple="true"
-                                  :options="optionsFilters" />
-                                </div> 
-                                <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Actualizar filtros</button>                               
-                              </div>                                                            
-                          </div>
-                          <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" >
-                            <div class="card-header" style="padding-left: 15px; margin: 0px -5px 0px -5px; " aria-expanded="false" >
-                              <div class="clearfix">
-                                
-                                <h2 class="float-left">Filtros</h2>
-                                <div class="form-group" style="display: flex;margin-top: 10px; justify-content: flex-end" v-if="_flagSearchHistory == true">
-                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Historial de búsquedas:</label>
-                                  <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <select class="form-control col-md-12 col-sm-12 col-xs-12" v-model="selectedArray" @change="useSearch()" >
-                                      <option value="NEW">Nueva búsqueda</option>
-                                      <option v-for="value in searchHistory" :value="value"  >{{value.label}}</option>
-                                    </select>
-                                  </div>                               
-                                </div>   
-
-                              </div>
+                            <div v-if="_flagListFilters == true" class="form-group" >
+                            <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;"  >                             
+                                <h3 style="padding-top: 10px;">Seleccione más filtros para la búsqueda </h3>
+                                <div class="form-group" style="margin-top: 10px;">
+                                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Selecciona un filtro:</label>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <treeselect v-model="arrayAddedFilters"                                
+                                    :value-consists-of="valueConsistsOf"
+                                    :multiple="true"
+                                    :options="optionsFilters" />
+                                  </div> 
+                                  <button type="button"  @click="addFilter()" class="btn btn-success btn-xs float-right">Actualizar filtros</button>                               
+                                </div>                                                            
                             </div>
-                            <div class="form-group" style="margin-top: 20px; margin-bottom: 30px;" v-if="_flagSearchHistory ==true">
-                                <h3 class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de la búsqueda:</h3>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text"  v-if="showEditTitleSearch == true"  v-model="titleSearch"  class="form-control col-md-12 col-xs-12" >
-                                    <input type="text"  v-if="showEditTitleSearch == false" v-model="titleSearch"  class="form-control col-md-12 col-xs-12" readonly>
+                            <div  class="card-body" style="border: 1px solid #E6E9ED;margin-bottom: 20px;" >
+                              <div class="card-header" style="padding-left: 15px; margin: 0px -5px 0px -5px; " aria-expanded="false" >
+                                <div class="clearfix">
+                                  
+                                  <h2 class="float-left">Filtros</h2>
+                                  <div class="form-group" style="display: flex;margin-top: 10px; justify-content: flex-end" v-if="_flagSearchHistory == true">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Historial de búsquedas:</label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                      <select class="form-control col-md-12 col-sm-12 col-xs-12" v-model="selectedArray" @change="useSearch()" >
+                                        <option value="NEW">Nueva búsqueda</option>
+                                        <option v-for="value in searchHistory" :value="value"  >{{value.label}}</option>
+                                      </select>
+                                    </div>                               
+                                  </div>   
+
                                 </div>
-                                <a @click="editTitleSearch()" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
-                            </div>
+                              </div>
+                              <div class="form-group" style="margin-top: 20px; margin-bottom: 30px;" v-if="_flagSearchHistory ==true">
+                                  <h3 class="control-label col-md-3 col-sm-3 col-xs-12">Nombre de la búsqueda:</h3>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <input type="text"  v-if="showEditTitleSearch == true"  v-model="titleSearch"  class="form-control col-md-12 col-xs-12" >
+                                      <input type="text"  v-if="showEditTitleSearch == false" v-model="titleSearch"  class="form-control col-md-12 col-xs-12" readonly>
+                                  </div>
+                                  <a @click="editTitleSearch()" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+                              </div>
+                              
+
+                              <MasterAdministrator
+                                :filters="filtersMasterAdministrator"          
+                                :buttonFilter="buttonFilter"                           
+                                ref ="masterAdministartor"
+                              ></MasterAdministrator>
+
+                              <div class="card-body">
+                                <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">{{htmllabelSearchButton}}</button> 
+                                <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">{{htmllabelCleanButton}}</button>        
+                                <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
+                              </div>
                             
-
-                            <MasterAdministrator
-                              :filters="filtersMasterAdministrator"          
-                              :buttonFilter="buttonFilter"                           
-                              ref ="masterAdministartor"
-                            ></MasterAdministrator>
-
-                            <div class="card-body">
-                              <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">{{htmllabelSearchButton}}</button> 
-                              <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">{{htmllabelCleanButton}}</button>        
-                              <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
+                            </div> 
                             </div>
-                           
-                          </div> 
-                          </div>
 
-                          <div v-else class="card-body" style="margin-bottom: 20px;" >                          
+                          <!-- <div v-else class="card-body" style="margin-bottom: 20px;" >                           -->
                             <MasterAdministrator
+                              v-else
                               :filters="filtersMasterAdministrator"          
                               :buttonFilter="buttonFilter"                           
                               ref ="masterAdministartor"
                             ></MasterAdministrator>
-                            <div class="card-body">
+
+                            <div class="card-body search-buttons-section">
                               <button type="button"  @click="runSearch()" class="btn btn-success btn-xs float-right">{{htmllabelSearchButton}}</button> 
                               <button type="button"  @click="clearSearch()" class="btn btn-success btn-xs float-right">{{htmllabelCleanButton}}</button>        
                               <button v-if="flagSaveSearch == true && _flagSearchHistory==true" type="button" @click="saveSearch()" class="btn btn-success btn-xs float-right">Guardar búsqueda</button>                   
                             </div>                           
-                          </div> 
+                          <!-- </div>  -->
 
                        </div>
 
-                    </div>
+              
                 </div>      
     </div>
 

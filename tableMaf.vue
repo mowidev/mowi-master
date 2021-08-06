@@ -102,9 +102,7 @@
      const Value = ({ props }) => {
       return <div>{props.data}</div>
     }
-
     export default {
-
         props: ['header','data','tableTitle','searchOption','text','callbackData','title','datePerPageV','pagination',
         'useMassiveSelector','numberRecord', 'flagSort'],
          components: {
@@ -142,7 +140,6 @@
              if(this.flagSort ){this.showSort=this.flagSort}
              if(this.text != ''){this.textView=true}
              
-
         },
         methods: {
             check_(e){
@@ -154,7 +151,6 @@
                     }
                 }
             },
-
            formatData(data){
                 var ctx = this;
                 if(this.useMassiveSelector == true){
@@ -165,16 +161,13 @@
                     }
                    
                 }
-
                 this.dataTable=[];
                 this.dataTable = _.map(data, (item, i)=>{
                     item.indexTableMaf = i;
                     return item;
                 });
-
             },
             orderByAsc(camp){
-
                 var dataValue = _.toUpper(this.dataTable[1][camp]);
                  if (dataValue=='[OBJECT OBJECT]')
                 {
@@ -197,11 +190,9 @@
                 {
                     this.dataTable =  _.orderBy(this.dataTable,[camp],['desc']);
                 }
-
             },
             massiveSeletor(){    
                 console.log('mira prueba ', this.massiveSelect)
-
                 for (let index = 0; index < this.dataTable.length; index++) {
                     console.log('lo que está adentro', this.dataTable[index].isSelected)
                     this.massiveSelect == true?   this.dataTable[index].isSelected = false : this.dataTable[index].isSelected = true                     
@@ -213,8 +204,6 @@
                console.log('entró a changeMassiveSelect',valor) 
                this.massiveSelect == true? this.massiveSelect = false:null
             }
-
-
         },
         computed:{
             filtered () {
@@ -238,8 +227,6 @@
                         return _.includes(dataValue,filterValue)
                     }) : filteredData ;
                 })
-
-
                 if (this.$refs.paginator)
                 {
                     if(this.$refs.paginator.currentPage < 0 && filteredData.length >= 1 )
@@ -247,13 +234,9 @@
                         this.$refs.paginator.currentPage = 0 ;
                     }
                 }
-
-
                 return filteredData;
             },
-
         }
-
     }
 </script>
 
@@ -267,7 +250,6 @@ ul.paginate-links.dataTable li.disabled a {
     cursor: not-allowed;
     justify-content: center!important;
 }
-
 ul.paginate-links.dataTable li a {
     text-decoration: none;
     display: inline;
@@ -278,20 +260,16 @@ ul.paginate-links.dataTable li a {
     font-weight: normal;
     font-size: inherit;
     cursor:pointer;
-
 }
-
 ul.paginate-links>li:first-child>a{
     margin-left: 0;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
-
 ul.paginate-links>li:last-child>a{
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-
 ul.paginate-links>.active>a, ul.paginate-links>.active>a:focus, ul.paginate-links>.active>a:hover{
     z-index: 3;
     color: #fff;
@@ -308,15 +286,10 @@ ul.paginate-links>.active>a, ul.paginate-links>.active>a:focus, ul.paginate-link
       font-weight: normal;
       font-size: inherit;
   }
-
-
   ul.paginate-links.dataTable {padding-top: 10px;}
-
   .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-
 }
-
 </style>

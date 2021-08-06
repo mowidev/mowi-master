@@ -1,5 +1,5 @@
 <template>
-    <div :class="_styles.formGroup">
+    <div :class="_styles.formGroup" class="mowi-master-item-search">
         <!--Etiqueta-->
         <label :class="_styles.label">{{_label}}</label>
         <!--Lista de Operadores-->
