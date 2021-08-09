@@ -19,7 +19,7 @@
           </Datepicker> -->
 
           <v-date-picker 
-            format=_formatComp
+            :format="_formatComp"
             :mode="_mode" 
             :value="_dateRange" 
             v-model="variable"            
