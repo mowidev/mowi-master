@@ -1,5 +1,5 @@
 <template>
-  <div v-if="_isVisible  == true" :class="_styles.formGroup">
+  <div v-if="_isVisible  == true" :class="_styles.formGroup" class="mowi-master-item-search">
       <label :class="_styles.label">{{_label}}</label>
       <div :class="_styles.container">
           <!-- <v-date-picker 
@@ -7,7 +7,7 @@
           v-on:input="returnData" 
           format="MMMM-yyyy" value-format="MM-yyyy" type="month"
           ></v-date-picker> -->
-          <Datepicker 
+          <!-- <Datepicker 
             :value="_dateRange"
             :mode="'range'"
             v-model="variable"
@@ -16,7 +16,15 @@
             maximum-view="year"
             name="datepicker"
             input-class="input-class">
-          </Datepicker>
+          </Datepicker> -->
+
+          <v-date-picker 
+            format=_formatComp
+            :mode="_mode" 
+            :value="_dateRange" 
+            v-model="variable"            
+            v-on:input="returnData" >
+          </v-date-picker>
 
       </div>
   </div>     
@@ -32,7 +40,7 @@ export default {
     Datepicker,
   }, 
 
-  props:['label','dateRange','styles','mode','isVisible','isRequired']  ,
+  props:['label','dateRange','styles','mode','isVisible','isRequired', 'format']  ,
   data: () => ({
     //acá se definen todos los atributos customizables del componente en este objeto default
     default:{
@@ -42,12 +50,14 @@ export default {
       mode: 'range',
       isVisible: true,
       isRequired:false, 
+      formatComp: 'dd/MM/yyyy'
     },
     //acá se definen todos los atributos usados en el html
     _label:'',
     _dateRange:{},
     _styles:{formGroup:'',label:'',container:''},
     _mode: '',
+    _formatComp: '',
     _isVisible:true ,
     _isRequired:'', 
     //valores internos para la lógica
@@ -61,6 +71,7 @@ export default {
     this.dateRange? this._dateRange = this.dateRange : this._dateRange = this.default.dateRange
     this.styles? this._styles = this.styles : this._styles = this.default.styles 
     this.mode? this._mode = this.mode : this._mode = this.default.mode
+    this.format? this._formatComp = this.format : this._formatComp = this.default.formatComp
     this.isVisible? this._isVisible = this.isVisible : this._isVisible = this.default.isVisible
     this.selectDate? this._selectDate = this.selectDate : this._selectDate = this.default.selectDate
     this.vModel? this._vModel = this.vModel : this._vModel = this.default.vModel
