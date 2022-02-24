@@ -87,6 +87,7 @@ export default {
   },
   methods: {
     returnData(){
+      console.log('return data fechaaaa', this.variable)
       //Función para retornar los valores seleccionados en el componente
       //este componente puede retornar una fecha o un rango compuesto por dos fechas 
       //es necesario validar y dar el formato
@@ -98,9 +99,15 @@ export default {
       }
       if(this._mode=='range'){
         var selectedRange = {}
-        selectedRange.start =  moment(this.variable.start).valueOf()
-        selectedRange.end =  moment(this.variable.end).valueOf()    
-        this.$emit('input', selectedRange);
+        if(this.variable != null){
+          selectedRange.start =  moment(this.variable.start).valueOf()
+          selectedRange.end =  moment(this.variable.end).valueOf()    
+          this.$emit('input', selectedRange);
+        }else{
+          this.variable =undefined   
+          this.$emit('input', undefined);
+        }
+
       }
     },
 
